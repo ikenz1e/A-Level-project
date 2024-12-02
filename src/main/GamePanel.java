@@ -6,7 +6,9 @@ import java.awt.Graphics2D;
 
 import javax.swing.JPanel;
 
+import entities.Entity;
 import entities.Player;
+import handlers.AssetHandler;
 import handlers.CollisionHandler;
 import handlers.InputHandler;
 import tile.TileManager;
@@ -30,11 +32,16 @@ public class GamePanel extends JPanel implements Runnable {
 	InputHandler inputHandler = new InputHandler();
 	public CollisionHandler collisionHandler = new CollisionHandler(this);
 	public TileManager tileManager = new TileManager(this);
+	public AssetHandler assetHandler = new AssetHandler(this);
 	
 	Thread gameThread;
+
 	// instantiate the player class
 	Player player = new Player(this, inputHandler);
-	
+	// objects and NPCs
+	public Entity[] npc = new Entity[10];
+
+
 	// constructor
 	public GamePanel() {
 		this.setPreferredSize(new Dimension(screenWidth, screenHeight)); // set the size of the JPanel (the screen)
@@ -42,6 +49,7 @@ public class GamePanel extends JPanel implements Runnable {
 		this.setDoubleBuffered(true); // all drawing will be done in an off screen buffer to avoid any visual bugs and improving performance
 		this.addKeyListener(inputHandler);
 		this.setFocusable(true); // the game panel can be "focused" to receive all key inputs
+		assetHandler.setNPC();
 	}
 
 	
@@ -103,6 +111,13 @@ public class GamePanel extends JPanel implements Runnable {
 		
 		// draw the player
 		player.draw(g2);
+
+		for(Entity entity : npc) {
+			if(entity != null){
+				entity.draw(g2);
+
+			}
+		}
 		
 		// disposes the graphics content and release system resources, preventing issues such as memory leaks
 		g2.dispose();

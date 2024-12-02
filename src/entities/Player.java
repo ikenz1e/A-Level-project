@@ -1,8 +1,5 @@
 package entities;
 
-import java.awt.Graphics2D;
-import java.awt.image.BufferedImage;
-
 import handlers.InputHandler;
 import main.GamePanel;
 
@@ -15,7 +12,8 @@ public class Player extends Entity{
 	// constructor, passing in gamePanel and inputHandler
 	public Player(GamePanel gp, InputHandler inputH) {
 		// assigning gamePanel and inputHandler
-		this.gamePanel = gp;
+		super(gp);
+
 		this.inputHandler = inputH;
 		
 		this.hitbox = new Hitbox(8, 16, 32, 32);
@@ -103,58 +101,7 @@ public class Player extends Entity{
 			}
 			
 			
-		}
-		
-		
-		
-		
-		
-	}
-	
-	// draw method to be called in the paintComponent() method of the gamePanel
-	public void draw(Graphics2D g2) {
-		
-		// the current image to be drawn to the screen
-		BufferedImage currentImage = null;
-		
-		// find which image based on the sprite cycle and the players direction
-		switch(direction) {
-		case "up":
-			if (spriteNum == 1) {
-				currentImage = up1;
-			}else if (spriteNum == 2) {
-				currentImage = up2;
-			}
-			break;
-		case "down":
-			if (spriteNum == 1) {
-				currentImage = down1;
-			}else if (spriteNum == 2) {
-				currentImage = down2;
-			}
-			break;
-		case "left":
-			if (spriteNum == 1) {
-				currentImage = left1;
-			}else if (spriteNum == 2) {
-				currentImage = left2;
-			}
-			break;
-		case "right":
-			if (spriteNum == 1) {
-				currentImage = right1;
-			}else if (spriteNum == 2) {
-				currentImage = right2;
-			}
-			break;
-		default:
-			currentImage = down1;
-			break;
-		}
-		
-		// draw the image to the screen using the Graphics2D library
-		g2.drawImage(currentImage, worldX, worldY, gamePanel.getTileSize(), gamePanel.getTileSize(), null);
-		
+		}	
 	}
 	
 }
