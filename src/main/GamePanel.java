@@ -13,6 +13,8 @@ import tile.TileManager;
 
 public class GamePanel extends JPanel implements Runnable {
 
+	// this should be added in the development branch
+
 	// screen settings
 	final int originalTileSize = 16; // 16x16 tiles
 	final int tileScaler = 3; // scale the tiles to be 48x48
