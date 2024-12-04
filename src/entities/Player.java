@@ -6,15 +6,13 @@ import main.GamePanel;
 public class Player extends Entity{
 
 	// get instances of the gamePanel and inputHandler
-	GamePanel gamePanel;
 	InputHandler inputHandler;
-	
+
 	// constructor, passing in gamePanel and inputHandler
-	public Player(GamePanel gp, InputHandler inputH) {
+	public Player(GamePanel gp) {
 		// assigning gamePanel and inputHandler
 		super(gp);
-
-		this.inputHandler = inputH;
+		this.inputHandler = gamePanel.inputHandler;
 		
 		this.hitbox = new Hitbox(8, 16, 32, 32);
 		
@@ -99,7 +97,6 @@ public class Player extends Entity{
 					break;
 				}
 			}
-			
 			
 		}	
 	}

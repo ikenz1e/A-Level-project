@@ -29,7 +29,7 @@ public class GamePanel extends JPanel implements Runnable {
 	int FPS = 60;
 	
 	// instantiate any handlers and managers
-	InputHandler inputHandler = new InputHandler();
+	public InputHandler inputHandler = new InputHandler();
 	public CollisionHandler collisionHandler = new CollisionHandler(this);
 	public TileManager tileManager = new TileManager(this);
 	public AssetHandler assetHandler = new AssetHandler(this);
@@ -37,7 +37,7 @@ public class GamePanel extends JPanel implements Runnable {
 	Thread gameThread;
 
 	// instantiate the player class
-	Player player = new Player(this, inputHandler);
+	Player player = new Player(this);
 	// objects and NPCs
 	public Entity[] npc = new Entity[10];
 

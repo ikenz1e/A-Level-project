@@ -24,4 +24,8 @@ public class NPC_Wizard extends Entity {
         right2 = getEntityImage("npc", "wizard_right_2.png");
     }
 
+    public void update() {
+        gamePanel.collisionHandler.checkTiles(this);
+    }
+
 }

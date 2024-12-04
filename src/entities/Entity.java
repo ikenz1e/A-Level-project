@@ -20,7 +20,7 @@ public class Entity {
 	int health;
 	int maxHealth;
 	
-	public Hitbox hitbox = new Hitbox(0, 0, 48, 48);
+	public Hitbox hitbox;
 	public boolean collision;
 	
 	// entity images
