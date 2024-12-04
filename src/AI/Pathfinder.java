@@ -186,19 +186,26 @@ public class Pathfinder {
         return goalReached;
     }
 
-    // openNode method 
+    // openNode method, takes a node of type Node as parameter
     public void openNode(Node node){
+        // if the node isnt open and checked and solid 
         if(!node.open && !node.checked && !node.solid){
+            // set the node to open, set the parent to be the current node and add it to the open list
             node.open=true;
             node.parent = currentNode;
             openList.add(node);
         }
     }
 
+    // trackPath method
     public void trackPath(){
+        // set the current to the goal - start from the end
         Node current = goalNode;
+        // loop while the current node isnt the start node
         while(current != startNode){
+            // add the current node to the path list
             pathList.add(current);
+            // set the current to the parent
             current = current.parent;
         }
     }

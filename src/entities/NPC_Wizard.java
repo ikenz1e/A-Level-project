@@ -2,17 +2,21 @@ package entities;
 
 import main.GamePanel;
 
+// inherits from entity
 public class NPC_Wizard extends Entity {
     
+    // constructure, passing in the gamepanel 
     public NPC_Wizard(GamePanel gp){
+        // super class constructor to assign gamepanel
         super(gp);
-
+        // load the images
         getImages();
-        
+        // set the default direction and speed
         direction = "down";
         speed = 1;
     }
 
+    // assign all the image attributes to their images, using the getEntityImage method inherited from Entity
     public void getImages() {
         up1 = getEntityImage("npc", "wizard_up_1.png");
         up2 = getEntityImage("npc", "wizard_up_2.png");
@@ -23,7 +27,8 @@ public class NPC_Wizard extends Entity {
         right1 = getEntityImage("npc", "wizard_right_1.png");
         right2 = getEntityImage("npc", "wizard_right_2.png");
     }
-
+    
+    // update method
     public void update() {
         gamePanel.collisionHandler.checkTiles(this);
     }
