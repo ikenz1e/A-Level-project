@@ -19,7 +19,8 @@ public class Entity {
 	public String direction;
 	int health;
 	int maxHealth;
-	
+	public boolean onPath = false;
+
 	public Hitbox hitbox;
 	public boolean collision;
 	
@@ -56,7 +57,15 @@ public class Entity {
 	public int getWorldX() {
 		return this.worldX;
 	}
+
+	public int getCol(){
+		return this.worldX / gamePanel.getTileSize();
+	}
 	
+	public int getRow(){
+		return this.worldY / gamePanel.getTileSize();
+	}
+
 	public int getWorldY() {
 		return this.worldY;
 	}
@@ -105,6 +114,113 @@ public class Entity {
 		// draw the image to the screen using the Graphics2D library
 		g2.drawImage(currentImage, worldX, worldY, gamePanel.getTileSize(), gamePanel.getTileSize(), null);
 		
+	}
+
+	public void checkCollision(){
+		collision = false;
+		gamePanel.collisionHandler.checkTiles(this);
+	}
+
+	public void searchPath(int goalCol, int goalRow){
+		int startCol = (worldX + hitbox.getX()) / gamePanel.getTileSize();
+		int startRow = (worldY + hitbox.getY()) / gamePanel.getTileSize();
+
+		gamePanel.pathFinder.setNodes(startCol, startRow, goalCol, goalRow);
+
+		if(gamePanel.pathFinder.search()){
+			// next world X and world Y
+
+			int nextX = gamePanel.pathFinder.pathList.get(0).col * gamePanel.getTileSize();
+			int nextY = gamePanel.pathFinder.pathList.get(0).row * gamePanel.getTileSize();
+
+			// hitbox position
+			int leftX = worldX + hitbox.getX();
+			int rightX = worldX + hitbox.getWidth() + hitbox.getX();
+			int topY = worldY + hitbox.getY();
+			int bottomY = worldY + hitbox.getHeight() + hitbox.getY();
+
+			if(topY > nextY && leftX >= nextX && rightX < leftX + gamePanel.getTileSize()){
+				direction = "up";
+			}
+			else if(topY < nextY && leftX >= nextX && rightX < leftX + gamePanel.getTileSize()){
+				direction = "down";
+			}
+			else if(topY >= nextY && bottomY < nextY + gamePanel.getTileSize()){
+				// can go left or right
+				if(leftX > nextX){
+					direction = "left";
+				}
+				if (leftX < nextX){
+					direction = "right";
+				}
+			}
+			else if (topY > nextY && leftX > nextX){
+				// up or left
+				direction = "up";
+				checkCollision();
+				if (collision){
+					direction = "left";
+				}
+			}
+			else if (topY > nextY && leftX < nextX){
+				// up or right
+				direction = "up";
+				checkCollision();
+				if(collision){
+					direction = "right";
+				}
+			}
+			else if (topY < nextY && leftX > nextX){
+				// down or left
+				direction = "down";
+				checkCollision();
+				if(collision){
+					direction = "left";
+				}
+			}
+			else if (topY < nextY && leftX < nextX){
+				// down or right
+				direction = "down";
+				if(collision){
+					direction = "right";
+				}
+			}
+
+			int nextCol = gamePanel.pathFinder.pathList.get(0).col;
+			int nextRow = gamePanel.pathFinder.pathList.get(0).row;
+
+			if (nextCol == goalCol && nextRow == goalRow){
+				onPath = false;
+			}
+		}
+	}
+
+	public void setAction(){
+
+	}
+
+	public void update(){
+		setAction();
+
+		// if there is no collision, the entity can move
+		if(!collision) {
+			switch(direction) {
+			case "up":
+				worldY -= speed;
+				break;
+			case "down":
+				worldY += speed;
+				break;
+			case "left":
+				worldX -= speed;
+				break;
+			case "right":
+				worldX += speed;
+				break;
+			default:
+				break;
+			}
+		}
 	}
 	
 }

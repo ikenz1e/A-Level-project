@@ -6,6 +6,7 @@ import java.awt.Graphics2D;
 
 import javax.swing.JPanel;
 
+import AI.Pathfinder;
 import entities.Entity;
 import entities.Player;
 import handlers.AssetHandler;
@@ -33,11 +34,12 @@ public class GamePanel extends JPanel implements Runnable {
 	public CollisionHandler collisionHandler = new CollisionHandler(this);
 	public TileManager tileManager = new TileManager(this);
 	public AssetHandler assetHandler = new AssetHandler(this);
+	public Pathfinder pathFinder = new Pathfinder(this);
 	
 	Thread gameThread;
 
 	// instantiate the player class
-	Player player = new Player(this);
+	public Player player = new Player(this);
 	// objects and NPCs
 	public Entity[] npc = new Entity[10];
 
@@ -95,6 +97,13 @@ public class GamePanel extends JPanel implements Runnable {
 		
 		// update the player
 		player.update();
+
+		// update NPCs
+		for(Entity NPC : npc) {
+			if(NPC != null){
+				NPC.update();
+			}
+		}
 	
 		
 	}

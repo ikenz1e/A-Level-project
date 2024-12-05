@@ -11,8 +11,8 @@ public class Pathfinder {
     // 2D list of all the nodes
     private Node[][] nodeList;
     // arrays of type Node for the open List and path List
-    private ArrayList<Node> openList;
-    private ArrayList<Node> pathList;
+    private ArrayList<Node> openList = new ArrayList<>();
+    public ArrayList<Node> pathList = new ArrayList<>();
     // start, goal and current nodes
     private Node startNode;
     private Node goalNode;

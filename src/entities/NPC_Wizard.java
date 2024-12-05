@@ -11,6 +11,10 @@ public class NPC_Wizard extends Entity {
         super(gp);
         // load the images
         getImages();
+
+        this.hitbox = new Hitbox(8, 16, 32, 32);
+        this.onPath = true;
+
         // set the default direction and speed
         direction = "down";
         speed = 1;
@@ -28,9 +32,20 @@ public class NPC_Wizard extends Entity {
         right2 = getEntityImage("npc", "wizard_right_2.png");
     }
     
+    public void setAction(){
+        if(onPath){
+            int goalCol = gamePanel.player.getCol();;
+            int goalRow = gamePanel.player.getRow();
+
+            searchPath(goalCol, goalRow);
+        }
+    }
+
     // update method
     public void update() {
         gamePanel.collisionHandler.checkTiles(this);
+
+        setAction();
     }
 
 }

@@ -75,13 +75,13 @@ public class Player extends Entity{
 			}	
 			
 			// check tile collisions
-			collision = false;
-			gamePanel.collisionHandler.checkTiles(this);
+			checkCollision();
 			
 			// if there is no collision, the player can move
 			if(!collision) {
 				switch(direction) {
 				case "up":
+					System.out.println("move up");
 					worldY -= speed;
 					break;
 				case "down":
@@ -96,6 +96,8 @@ public class Player extends Entity{
 				default:
 					break;
 				}
+			}else{
+				System.out.println("collisiion");
 			}
 			
 		}	
