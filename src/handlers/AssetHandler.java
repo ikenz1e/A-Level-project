@@ -10,7 +10,7 @@ public class AssetHandler {
 
     // constructor - takes the gamepanel as a parameter
     public AssetHandler(GamePanel gp) {
-        // assigns the gamepanel attribute
+        // assign the gamepanel attribute
         this.gamePanel = gp;
     }
 

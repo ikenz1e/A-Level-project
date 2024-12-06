@@ -127,6 +127,7 @@ public class Entity {
 
 		gamePanel.pathFinder.setNodes(startCol, startRow, goalCol, goalRow);
 
+
 		if(gamePanel.pathFinder.search()){
 			// next world X and world Y
 
@@ -181,16 +182,10 @@ public class Entity {
 			else if (topY < nextY && leftX < nextX){
 				// down or right
 				direction = "down";
+				checkCollision();
 				if(collision){
 					direction = "right";
 				}
-			}
-
-			int nextCol = gamePanel.pathFinder.pathList.get(0).col;
-			int nextRow = gamePanel.pathFinder.pathList.get(0).row;
-
-			if (nextCol == goalCol && nextRow == goalRow){
-				onPath = false;
 			}
 		}
 	}

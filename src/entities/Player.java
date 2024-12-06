@@ -81,7 +81,6 @@ public class Player extends Entity{
 			if(!collision) {
 				switch(direction) {
 				case "up":
-					System.out.println("move up");
 					worldY -= speed;
 					break;
 				case "down":
@@ -96,8 +95,6 @@ public class Player extends Entity{
 				default:
 					break;
 				}
-			}else{
-				System.out.println("collisiion");
 			}
 			
 		}	

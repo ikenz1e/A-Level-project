@@ -82,8 +82,8 @@ public class Pathfinder {
             openList.clear();
             pathList.clear();
             goalReached = false;
-            step = 0;
         }
+        step = 0;
     }
 
     // setNodes method, taking the coordinates of the starting node and the target node
@@ -108,6 +108,11 @@ public class Pathfinder {
             if(gamePanel.tileManager.tileArray[tileNum].collidable){
                 // set it to solid - the NPC cannot walk through, therefore cannot be part of the path
                 nodeList[col][row].solid = true;
+            }
+            col++;
+            if (col == gamePanel.getMaxScreenCol()){
+                col = 0;
+                row++;
             }
         }
     }

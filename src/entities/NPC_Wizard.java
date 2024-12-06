@@ -17,7 +17,7 @@ public class NPC_Wizard extends Entity {
 
         // set the default direction and speed
         direction = "down";
-        speed = 1;
+        speed = 2;
     }
 
     // assign all the image attributes to their images, using the getEntityImage method inherited from Entity
@@ -34,7 +34,7 @@ public class NPC_Wizard extends Entity {
     
     public void setAction(){
         if(onPath){
-            int goalCol = gamePanel.player.getCol();;
+            int goalCol = gamePanel.player.getCol();
             int goalRow = gamePanel.player.getRow();
 
             searchPath(goalCol, goalRow);
@@ -43,9 +43,28 @@ public class NPC_Wizard extends Entity {
 
     // update method
     public void update() {
+
         gamePanel.collisionHandler.checkTiles(this);
 
         setAction();
+        if(!collision) {
+            switch(direction) {
+            case "up":
+                worldY -= speed;
+                break;
+            case "down":
+                worldY += speed;
+                break;
+            case "left":
+                worldX -= speed;
+                break;
+            case "right":
+                worldX += speed;
+                break;
+            default:
+                break;
+            }
+        }
     }
 
 }
