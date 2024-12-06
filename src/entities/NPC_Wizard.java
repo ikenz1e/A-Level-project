@@ -31,7 +31,8 @@ public class NPC_Wizard extends Entity {
         right1 = getEntityImage("npc", "wizard_right_1.png");
         right2 = getEntityImage("npc", "wizard_right_2.png");
     }
-    
+
+    // setAction
     public void setAction(){
         if(onPath){
             int goalCol = gamePanel.player.getCol();
