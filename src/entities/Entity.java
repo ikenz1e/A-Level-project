@@ -59,11 +59,11 @@ public class Entity {
 	}
 
 	public int getCol(){
-		return this.worldX / gamePanel.getTileSize();
+		return (this.worldX + (gamePanel.getTileSize()/2) )/ gamePanel.getTileSize();
 	}
 	
 	public int getRow(){
-		return this.worldY / gamePanel.getTileSize();
+		return (this.worldY + (gamePanel.getTileSize()/2)) / gamePanel.getTileSize();
 	}
 
 	public int getWorldY() {
