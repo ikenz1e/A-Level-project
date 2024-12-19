@@ -24,7 +24,7 @@ public class NPC_Wizard extends Entity {
     public void getImages() {
         up1 = getEntityImage("npc", "wizard_up_1.png");
         up2 = getEntityImage("npc", "wizard_up_2.png");
-        down1 = getEntityImage("npc", "wizard_down_2.png");
+        down1 = getEntityImage("npc", "wizard_down_1.png");
         down2 = getEntityImage("npc", "wizard_down_2.png");
         left1 = getEntityImage("npc", "wizard_left_1.png");
         left2 = getEntityImage("npc", "wizard_left_2.png");
@@ -49,6 +49,16 @@ public class NPC_Wizard extends Entity {
 
         setAction();
         if(!collision) {
+            spriteCounter++;
+			// every 10 frames a sprite cycle should be run
+			if(spriteCounter > 10) {
+				if(spriteNum == 1) {
+					spriteNum = 2;
+				}else {
+					spriteNum = 1;
+				}
+				spriteCounter = 0;
+			}
             switch(direction) {
             case "up":
                 worldY -= speed;

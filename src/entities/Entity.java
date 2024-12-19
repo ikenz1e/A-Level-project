@@ -33,6 +33,7 @@ public class Entity {
 	
 	public Entity(GamePanel gp){
 		this.gamePanel = gp;
+		setDefaultValues();
 	}
 
 	// method to load images from a file into a variable
@@ -59,10 +60,12 @@ public class Entity {
 	}
 
 	public int getCol(){
+		// the x coordinate + half a tile length gives the centre x of the entity dividing by the length of a tile to find the column
 		return (this.worldX + (gamePanel.getTileSize()/2) )/ gamePanel.getTileSize();
 	}
 	
 	public int getRow(){
+		// the y coordinate + half a tile height gives the centre y coordinate of the entity, dividing by the height of a tile to find the row
 		return (this.worldY + (gamePanel.getTileSize()/2)) / gamePanel.getTileSize();
 	}
 
@@ -155,7 +158,7 @@ public class Entity {
 					direction = "right";
 				}
 			}
-			else if (topY > nextY && leftX > nextX){
+			else if (topY < nextY && leftX > nextX){
 				// up or left
 				direction = "up";
 				checkCollision();
@@ -163,7 +166,7 @@ public class Entity {
 					direction = "left";
 				}
 			}
-			else if (topY > nextY && leftX < nextX){
+			else if (topY > nextY && rightX < nextX){
 				// up or right
 				direction = "up";
 				checkCollision();
@@ -171,7 +174,7 @@ public class Entity {
 					direction = "right";
 				}
 			}
-			else if (topY < nextY && leftX > nextX){
+			else if (bottomY > nextY && leftX > nextX){
 				// down or left
 				direction = "down";
 				checkCollision();
@@ -179,7 +182,7 @@ public class Entity {
 					direction = "left";
 				}
 			}
-			else if (topY < nextY && leftX < nextX){
+			else if (bottomY < nextY && rightX < nextX){
 				// down or right
 				direction = "down";
 				checkCollision();

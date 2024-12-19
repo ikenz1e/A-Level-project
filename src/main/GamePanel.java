@@ -100,8 +100,6 @@ public class GamePanel extends JPanel implements Runnable {
 
 		// update NPCs
 		npc[0].update();
-	
-		
 	}
 	
 	// standard java method for drawing to a JPanel, graphics class is also a standard java class for graphical functions

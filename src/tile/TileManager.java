@@ -57,7 +57,6 @@ public class TileManager {
 	// method to get the image from the file path, passing in the name of the tile
 	private BufferedImage loadTileImage(String tileName) {
 		try {
-			System.out.println(tileName);
 			return ImageIO.read(getClass().getResourceAsStream("/tiles/"+tileName+".png"));
 		}catch(IOException e) {
 			e.printStackTrace();
