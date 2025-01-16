@@ -99,7 +99,11 @@ public class GamePanel extends JPanel implements Runnable {
 		player.update();
 
 		// update NPCs
-		npc[0].update();
+		for(Entity NPC : npc){
+			if (NPC != null){
+				NPC.update();
+			}
+		}
 	}
 	
 	// standard java method for drawing to a JPanel, graphics class is also a standard java class for graphical functions

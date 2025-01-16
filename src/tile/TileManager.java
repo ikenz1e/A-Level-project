@@ -38,17 +38,21 @@ public class TileManager {
 	
 	// storing each tile in the tile array
 	public void getTileImages() {
+		// grass tile
 		tileArray[0] = new Tile();
 		tileArray[0].image = loadTileImage("grass");
 		
+		// wall tile
 		tileArray[1] = new Tile();
 		tileArray[1].image = loadTileImage("wall");
 		tileArray[1].collidable = true;
 		
+		// water tile
 		tileArray[2] = new Tile();
 		tileArray[2].image = loadTileImage("water");
 		tileArray[2].collidable = true;
 		
+		// tree tile
 		tileArray[3] = new Tile();
 		tileArray[3].image = loadTileImage("tree");
 		tileArray[3].collidable = true;
