@@ -17,7 +17,7 @@ public class NPC_Wizard extends Entity {
 
         // set the default direction and speed
         direction = "down";
-        speed = 2;
+        speed = 1;
     }
 
     // assign all the image attributes to their images, using the getEntityImage method inherited from Entity
@@ -32,7 +32,7 @@ public class NPC_Wizard extends Entity {
         right2 = getEntityImage("npc", "wizard_right_2.png");
     }
 
-    // setAction
+    // setAction, inherited from Entity, overriding
     public void setAction(){
         if(onPath){
             int goalCol = gamePanel.player.getCol();
@@ -46,7 +46,7 @@ public class NPC_Wizard extends Entity {
     public void update() {
 
         gamePanel.collisionHandler.checkTiles(this);
-
+        
         setAction();
         if(!collision) {
             spriteCounter++;
