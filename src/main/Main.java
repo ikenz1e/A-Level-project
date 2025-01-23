@@ -21,6 +21,8 @@ public class Main {
 		window.setLocationRelativeTo(null);
 		window.setVisible(true);
 		
+		gamePanel.setupGame();
+
 		// start the game thread, essentially starts the game
 		gamePanel.startGameThread();
 		

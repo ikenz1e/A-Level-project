@@ -17,7 +17,7 @@ public class NPC_Wizard extends Entity {
 
         // set the default direction and speed
         direction = "down";
-        speed = 1;
+        speed = 2;
     }
 
     // assign all the image attributes to their images, using the getEntityImage method inherited from Entity

@@ -61,12 +61,12 @@ public class Entity {
 
 	public int getCol(){
 		// the x coordinate + half a tile length gives the centre x of the entity dividing by the length of a tile to find the column
-		return (this.worldX)/ gamePanel.getTileSize();
+		return (this.worldX + gamePanel.getTileSize()/2)/ gamePanel.getTileSize();
 	}
 	
 	public int getRow(){
 		// the y coordinate + half a tile height gives the centre y coordinate of the entity, dividing by the height of a tile to find the row
-		return (this.worldY) / gamePanel.getTileSize();
+		return (this.worldY + gamePanel.getTileSize()/2) / gamePanel.getTileSize();
 	}
 
 	public int getWorldY() {

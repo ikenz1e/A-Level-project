@@ -12,6 +12,7 @@ import entities.Player;
 import handlers.AssetHandler;
 import handlers.CollisionHandler;
 import handlers.InputHandler;
+import item.Item;
 import tile.TileManager;
 
 public class GamePanel extends JPanel implements Runnable {
@@ -42,6 +43,7 @@ public class GamePanel extends JPanel implements Runnable {
 	public Player player = new Player(this);
 	// objects and NPCs
 	public Entity[] npc = new Entity[10];
+	public Item[] items = new Item[10];
 
 
 	// constructor
@@ -51,7 +53,11 @@ public class GamePanel extends JPanel implements Runnable {
 		this.setDoubleBuffered(true); // all drawing will be done in an off screen buffer to avoid any visual bugs and improving performance
 		this.addKeyListener(inputHandler);
 		this.setFocusable(true); // the game panel can be "focused" to receive all key inputs
+	}
+
+	public void setupGame() {
 		assetHandler.setNPC();
+		assetHandler.setItem();
 	}
 
 	
@@ -123,6 +129,12 @@ public class GamePanel extends JPanel implements Runnable {
 			if(entity != null){
 				entity.draw(g2);
 
+			}
+		}
+
+		for(Item item: items){
+			if(item != null){
+				item.draw(g2);
 			}
 		}
 		

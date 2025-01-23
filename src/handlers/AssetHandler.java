@@ -1,6 +1,7 @@
 package handlers;
 
 import entities.NPC_Wizard;
+import item.ITEM_Sword;
 import main.GamePanel;
 
 public class AssetHandler {
@@ -19,6 +20,12 @@ public class AssetHandler {
         gamePanel.npc[0] = new NPC_Wizard(gamePanel);
         gamePanel.npc[0].worldX = gamePanel.getTileSize() * 4;
         gamePanel.npc[0].worldY = gamePanel.getTileSize() * 5;
+    }
+
+    public void setItem(){
+        gamePanel.items[0] = new ITEM_Sword(gamePanel);
+        gamePanel.items[0].worldX = gamePanel.getTileSize() * 6;
+        gamePanel.items[0].worldY = gamePanel.getTileSize() * 7;
     }
 
 }
