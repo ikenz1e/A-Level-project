@@ -1,26 +1,17 @@
 package item;
 
-import java.io.IOException;
-
-import javax.imageio.ImageIO;
-
 import main.GamePanel;
 
 public class ITEM_Sword extends Item {
     
     public ITEM_Sword(GamePanel gp){
 
+        // inherited constructor, passing in the gamePanel
         super(gp);
-
+        // assigning the name attribute
         name = "normal sword";
-        try {
-            image = ImageIO.read(getClass().getResourceAsStream("/items/sword_normal.png"));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-
-
+        // assigning the image attribute for drawing
+        image = gamePanel.utils.getImage("items", "sword_normal.png");
     }
 
 }

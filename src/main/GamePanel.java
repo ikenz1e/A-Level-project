@@ -14,6 +14,7 @@ import handlers.CollisionHandler;
 import handlers.InputHandler;
 import item.Item;
 import tile.TileManager;
+import utils.Utils;
 
 public class GamePanel extends JPanel implements Runnable {
 
@@ -30,13 +31,14 @@ public class GamePanel extends JPanel implements Runnable {
 	// FPS
 	int FPS = 60;
 	
-	// instantiate any handlers and managers
+	// instantiate any handlers/managers/utility classes
 	public InputHandler inputHandler = new InputHandler();
 	public CollisionHandler collisionHandler = new CollisionHandler(this);
 	public TileManager tileManager = new TileManager(this);
 	public AssetHandler assetHandler = new AssetHandler(this);
 	public Pathfinder pathFinder = new Pathfinder(this);
-	
+	public Utils utils = new Utils();
+
 	Thread gameThread;
 
 	// instantiate the player class

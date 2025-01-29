@@ -2,9 +2,6 @@ package entities;
 
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
-import java.io.IOException;
-
-import javax.imageio.ImageIO;
 
 import main.GamePanel;
 
@@ -34,16 +31,6 @@ public class Entity {
 	public Entity(GamePanel gp){
 		this.gamePanel = gp;
 		setDefaultValues();
-	}
-
-	// method to load images from a file into a variable
-	public BufferedImage getEntityImage(String entityType, String imagePath) {
-		try {
-			return ImageIO.read(getClass().getResourceAsStream("/" + entityType + "/" + imagePath));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		return null;
 	}
 	
 	// default values in case the setDefaultValues method is not set for a class

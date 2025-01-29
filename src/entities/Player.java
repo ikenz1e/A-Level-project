@@ -33,14 +33,14 @@ public class Player extends Entity{
 	
 	// assign all the images to their corresponding variables using the getEntityImage() method from parent class
 	public void getPlayerImages() {
-		up1 = getEntityImage("player", "player_up_1.png");
-		up2 = getEntityImage("player", "player_up_2.png");
-		down1 = getEntityImage("player", "player_down_1.png");
-		down2 = getEntityImage("player", "player_down_2.png");
-		left1 = getEntityImage("player", "player_left_1.png");
-		left2 = getEntityImage("player", "player_left_2.png");
-		right1 = getEntityImage("player", "player_right_1.png");
-		right2 = getEntityImage("player", "player_right_2.png");
+		up1 = gamePanel.utils.getImage("player", "player_up_1.png");
+		up2 = gamePanel.utils.getImage("player", "player_up_2.png");
+		down1 = gamePanel.utils.getImage("player", "player_down_1.png");
+		down2 = gamePanel.utils.getImage("player", "player_down_2.png");
+		left1 = gamePanel.utils.getImage("player", "player_left_1.png");
+		left2 = gamePanel.utils.getImage("player", "player_left_2.png");
+		right1 = gamePanel.utils.getImage("player", "player_right_1.png");
+		right2 = gamePanel.utils.getImage("player", "player_right_2.png");
 		
 	}
 	
