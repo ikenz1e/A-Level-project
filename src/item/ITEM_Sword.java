@@ -1,6 +1,7 @@
 package item;
 
 import main.GamePanel;
+import utils.ItemType;
 
 public class ITEM_Sword extends Item {
     
@@ -12,6 +13,7 @@ public class ITEM_Sword extends Item {
         name = "normal sword";
         // assigning the image attribute for drawing
         image = gamePanel.utils.getImage("items", "sword_normal.png");
+        itemType = ItemType.WEAPON;
     }
 
 }

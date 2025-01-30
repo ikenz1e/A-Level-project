@@ -1,6 +1,7 @@
 package entities;
 
 import java.awt.Graphics2D;
+import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 
 import main.GamePanel;
@@ -18,7 +19,9 @@ public class Entity {
 	int maxHealth;
 	public boolean onPath = false;
 
-	public Hitbox hitbox;
+	public Rectangle hitbox;
+	public int hitboxDefaultX;
+	public int hitboxDefaultY;
 	public boolean collision;
 	
 	// entity images
@@ -112,8 +115,8 @@ public class Entity {
 	}
 
 	public void searchPath(int goalCol, int goalRow){
-		int startCol = (worldX + hitbox.getX()) / gamePanel.getTileSize();
-		int startRow = (worldY + hitbox.getY()) / gamePanel.getTileSize();
+		int startCol = (worldX + (int)hitbox.getX()) / gamePanel.getTileSize();
+		int startRow = (worldY + (int) hitbox.getY()) / gamePanel.getTileSize();
 
 		gamePanel.pathFinder.setNodes(startCol, startRow, goalCol, goalRow);
 
@@ -125,10 +128,10 @@ public class Entity {
 			int nextY = gamePanel.pathFinder.pathList.get(0).row * gamePanel.getTileSize();
 
 			// hitbox position
-			int leftX = worldX + hitbox.getX();
-			int rightX = worldX + hitbox.getWidth() + hitbox.getX();
-			int topY = worldY + hitbox.getY();
-			int bottomY = worldY + hitbox.getHeight() + hitbox.getY();
+			int leftX = worldX + (int)hitbox.getX();
+			int rightX = worldX + (int)hitbox.getWidth() + (int)hitbox.getX();
+			int topY = worldY + (int)hitbox.getY();
+			int bottomY = worldY + (int)hitbox.getHeight() + (int)hitbox.getY();
 
 			if(topY > nextY && leftX >= nextX && rightX < leftX + gamePanel.getTileSize()){
 				direction = "up";

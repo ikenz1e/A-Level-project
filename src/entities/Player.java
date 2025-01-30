@@ -1,12 +1,18 @@
 package entities;
 
+import java.awt.Rectangle;
+
 import handlers.InputHandler;
+import item.Item;
 import main.GamePanel;
+import utils.ItemType;
 
 public class Player extends Entity{
 
 	// get instances of the gamePanel and inputHandler
 	InputHandler inputHandler;
+	
+	public Item currentWeapon;
 
 	// constructor, passing in gamePanel and inputHandler
 	public Player(GamePanel gp) {
@@ -14,7 +20,9 @@ public class Player extends Entity{
 		super(gp);
 		this.inputHandler = gamePanel.inputHandler;
 		
-		this.hitbox = new Hitbox(8, 16, 32, 32);
+		this.hitbox = new Rectangle(8, 16, 32, 32);
+		hitboxDefaultX = (int)this.hitbox.getX();
+		hitboxDefaultY = (int)this.hitbox.getY();
 		
 		// methods to be run on object instantiation
 		setDefaultValues();
@@ -29,6 +37,7 @@ public class Player extends Entity{
 		direction = "down";
 		health = 10;
 		maxHealth = 10;
+		currentWeapon = null;
 	}
 	
 	// assign all the images to their corresponding variables using the getEntityImage() method from parent class
@@ -44,9 +53,27 @@ public class Player extends Entity{
 		
 	}
 	
+	// method to handle picking up items, passing in the index in the gamePanel.items array
+	public void pickUpItem(int itemIndex){
+		// 999 is the default index with no items
+		if(itemIndex != 999){
+			// get the type of item
+			ItemType type = gamePanel.items[itemIndex].itemType;
+			switch (type) {
+				// if the item is a weapon, set the current weapon to the picked up item
+				case WEAPON:
+					currentWeapon = gamePanel.items[itemIndex];
+					break;
+				default:
+					break;
+			}
+			// set the space in the current items index to null to remove it
+			gamePanel.items[itemIndex] = null;
+		}
+	}
+
 	// update function to be run in the game loop
 	public void update() {
-		
 		// if a movement key is pressed, cycle through the sprites
 		if(inputHandler.wPressed || inputHandler.aPressed || inputHandler.sPressed || inputHandler.dPressed) {
 			spriteCounter++;
@@ -76,7 +103,13 @@ public class Player extends Entity{
 			
 			// check tile collisions
 			checkCollision();
+			int collidedItemIndex = gamePanel.collisionHandler.checkItem(this, true);
+			pickUpItem(collidedItemIndex);
 			
+			if(currentWeapon != null){
+				System.out.println(currentWeapon.name);
+			}
+
 			// if there is no collision, the player can move
 			if(!collision) {
 				switch(direction) {

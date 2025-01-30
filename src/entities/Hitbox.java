@@ -1,9 +1,11 @@
 package entities;
 
-public class Hitbox{
+import java.awt.Rectangle;
 
-	private int x, y;
-	private int width, height;
+public class Hitbox extends Rectangle{
+
+	public int x, y;
+	public int width, height;
 	
 	// constructor, passing in the x and y (relative the to entity), the width and the height
 	public Hitbox(int x, int y, int width, int height) {
@@ -13,20 +15,12 @@ public class Hitbox{
 		this.height = height;
 	}
 
-	public int getWidth() {
-		return width;
+	public void setX(int newX){
+		x = newX;
 	}
 
-	public int getHeight() {
-		return height;
-	}
-
-	public int getX() {
-		return x;
-	}
-
-	public int getY() {
-		return y;
+	public void setY(int newY){
+		y = newY;
 	}
 	
 }
