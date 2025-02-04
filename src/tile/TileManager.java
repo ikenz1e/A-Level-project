@@ -1,13 +1,9 @@
 package tile;
 
 import java.awt.Graphics2D;
-import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-
-import javax.imageio.ImageIO;
 
 import main.GamePanel;
 
@@ -32,40 +28,30 @@ public class TileManager {
 		mapTileNum = new int[gamePanel.getMaxScreenCol()][gamePanel.getMaxScreenRow()];
 	
 		// initial methods to run
-		getTileImages();
+		setTiles();
 		loadMap("/map/testmap.txt");
 	}
 	
 	// storing each tile in the tile array
-	public void getTileImages() {
+	public void setTiles() {
 		// grass tile
 		tileArray[0] = new Tile();
-		tileArray[0].image = loadTileImage("grass");
+		tileArray[0].image = gamePanel.utils.getImage("tiles", "grass.png");
 		
 		// wall tile
 		tileArray[1] = new Tile();
-		tileArray[1].image = loadTileImage("wall");
+		tileArray[1].image = gamePanel.utils.getImage("tiles", "wall.png");
 		tileArray[1].collidable = true;
 		
 		// water tile
 		tileArray[2] = new Tile();
-		tileArray[2].image = loadTileImage("water");
+		tileArray[2].image = gamePanel.utils.getImage("tiles", "water.png");
 		tileArray[2].collidable = true;
 		
 		// tree tile
 		tileArray[3] = new Tile();
-		tileArray[3].image = loadTileImage("tree");
+		tileArray[3].image = gamePanel.utils.getImage("tiles", "tree.png");
 		tileArray[3].collidable = true;
-	}
-	
-	// method to get the image from the file path, passing in the name of the tile
-	private BufferedImage loadTileImage(String tileName) {
-		try {
-			return ImageIO.read(getClass().getResourceAsStream("/tiles/"+tileName+".png"));
-		}catch(IOException e) {
-			e.printStackTrace();
-		}
-		return null;
 	}
 	
 	// method to load the map, passing in the path to the map txt file

@@ -7,7 +7,7 @@ import java.awt.event.MouseListener;
 
 public class InputHandler implements KeyListener, MouseListener{
 
-	public boolean wPressed, sPressed, dPressed, aPressed;
+	public boolean wPressed, sPressed, dPressed, aPressed, qPressed;
 	
 	@Override
 	public void keyTyped(KeyEvent e) {
@@ -35,6 +35,8 @@ public class InputHandler implements KeyListener, MouseListener{
 		case KeyEvent.VK_D:
 			dPressed = true;
 			break;
+		case KeyEvent.VK_Q:
+			qPressed = true;
 		default:
 			break;
 		}
@@ -61,6 +63,8 @@ public class InputHandler implements KeyListener, MouseListener{
 		case KeyEvent.VK_D:
 			dPressed = false;
 			break;
+		case KeyEvent.VK_Q:
+			qPressed = false;
 		default:
 			break;
 		}

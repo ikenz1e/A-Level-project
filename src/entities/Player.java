@@ -13,6 +13,8 @@ public class Player extends Entity{
 	InputHandler inputHandler;
 	
 	public Item currentWeapon;
+	public int attackCooldown = 0;
+	public Rectangle attackHitbox;
 
 	// constructor, passing in gamePanel and inputHandler
 	public Player(GamePanel gp) {
@@ -72,6 +74,41 @@ public class Player extends Entity{
 		}
 	}
 
+	// method to attack
+	public void attack(){
+		// if the player has a weapon and the cooldown has cooled down
+		if(currentWeapon != null && attackCooldown == 0){
+			System.out.println("attacked using: " + currentWeapon.name);
+			attackHitbox = new Rectangle(worldX, worldY, 1, 1);
+			switch(direction){
+				case "up":
+					attackHitbox.height = currentWeapon.range * gamePanel.getTileSize();
+					attackHitbox.y -= attackHitbox.height;
+					attackHitbox.width = gamePanel.getTileSize();
+					break;
+				case "down":
+					attackHitbox.height = currentWeapon.range * gamePanel.getTileSize();
+					attackHitbox.y += gamePanel.getTileSize();
+					attackHitbox.width = gamePanel.getTileSize();
+					break;
+				case "left":
+					attackHitbox.width = currentWeapon.range * gamePanel.getTileSize();
+					attackHitbox.x -= attackHitbox.width;
+					attackHitbox.height = gamePanel.getTileSize();
+					break;
+				case "right":
+					attackHitbox.width = currentWeapon.range * gamePanel.getTileSize();
+					attackHitbox.x += gamePanel.getTileSize();
+					attackHitbox.height = gamePanel.getTileSize();
+					break;
+			}
+			int npcIndex = gamePanel.collisionHandler.checkAttackCollision(attackHitbox);
+			System.out.println(npcIndex);
+			// cooldown = 30 frames / 0.5 secs
+			attackCooldown = 30;
+		}
+	}
+
 	// update function to be run in the game loop
 	public void update() {
 		// if a movement key is pressed, cycle through the sprites
@@ -103,12 +140,9 @@ public class Player extends Entity{
 			
 			// check tile collisions
 			checkCollision();
+			// check item collision
 			int collidedItemIndex = gamePanel.collisionHandler.checkItem(this, true);
 			pickUpItem(collidedItemIndex);
-			
-			if(currentWeapon != null){
-				System.out.println(currentWeapon.name);
-			}
 
 			// if there is no collision, the player can move
 			if(!collision) {
@@ -131,6 +165,15 @@ public class Player extends Entity{
 			}
 			
 		}	
+
+		// set the attack cooldown to be 0 if attackCooldown - 1 is less than 0
+		attackCooldown = Math.max(0, attackCooldown - 1);
+
+		// if the player presses the attack key, attack
+		if(gamePanel.inputHandler.qPressed){
+			attack();
+		}
+
 	}
 	
 }

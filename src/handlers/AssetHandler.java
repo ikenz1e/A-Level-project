@@ -24,6 +24,7 @@ public class AssetHandler {
 
     // setting the items on the map
     public void setItem(){
+        // sword item
         gamePanel.items[0] = new ITEM_Sword(gamePanel);
         gamePanel.items[0].worldX = gamePanel.getTileSize() * 6;
         gamePanel.items[0].worldY = gamePanel.getTileSize() * 7;

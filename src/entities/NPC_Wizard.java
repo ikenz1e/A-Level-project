@@ -1,5 +1,7 @@
 package entities;
 
+import java.awt.Rectangle;
+
 import main.GamePanel;
 
 // inherits from entity
@@ -12,7 +14,7 @@ public class NPC_Wizard extends Entity {
         // load the images
         getImages();
 
-        this.hitbox = new Hitbox(8, 16, 32, 32);
+        this.hitbox = new Rectangle(8, 16, 32, 32);
         this.onPath = true;
 
         // set the default direction and speed

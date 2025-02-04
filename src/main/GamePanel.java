@@ -32,12 +32,12 @@ public class GamePanel extends JPanel implements Runnable {
 	int FPS = 60;
 	
 	// instantiate any handlers/managers/utility classes
+	public Utils utils = new Utils();
 	public InputHandler inputHandler = new InputHandler();
 	public CollisionHandler collisionHandler = new CollisionHandler(this);
 	public TileManager tileManager = new TileManager(this);
 	public AssetHandler assetHandler = new AssetHandler(this);
 	public Pathfinder pathFinder = new Pathfinder(this);
-	public Utils utils = new Utils();
 
 	Thread gameThread;
 
@@ -127,10 +127,16 @@ public class GamePanel extends JPanel implements Runnable {
 		// draw the player
 		player.draw(g2);
 
+
+		g2.setColor(Color.RED);
+		if(player.attackHitbox != null){
+			g2.draw(player.attackHitbox);
+		}
+
 		for(Entity entity : npc) {
 			if(entity != null){
 				entity.draw(g2);
-
+				g2.draw(entity.hitbox);
 			}
 		}
 

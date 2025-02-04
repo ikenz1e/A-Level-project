@@ -1,5 +1,7 @@
 package handlers;
 
+import java.awt.Rectangle;
+
 import entities.Entity;
 import main.GamePanel;
 
@@ -111,6 +113,24 @@ public class CollisionHandler {
 				gamePanel.items[i].hitbox.y = gamePanel.items[i].hitboxDefaultY;
 
 				}
+		}
+
+		return index;
+	}
+
+	public int checkAttackCollision(Rectangle attackHitbox){
+		int index = 999;
+
+		for (int i = 0; i < gamePanel.npc.length; i++){
+			if(gamePanel.npc[i] != null){
+				gamePanel.npc[i].hitbox.x += gamePanel.npc[i].worldX;
+				gamePanel.npc[i].hitbox.y += gamePanel.npc[i].worldY;
+				if(gamePanel.npc[i].hitbox.intersects(attackHitbox)){
+					index = i;
+				}
+				gamePanel.npc[i].hitbox.x = gamePanel.npc[i].hitboxDefaultX;
+				gamePanel.npc[i].hitbox.y = gamePanel.npc[i].hitboxDefaultY;
+			}
 		}
 
 		return index;
