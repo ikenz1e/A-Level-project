@@ -19,10 +19,12 @@ public class Item {
     // default x and y coordinates of the hitbox
     public int hitboxDefaultX = 0;
     public int hitboxDefaultY = 0;
-    // the range of the item, mostly used for weapons
+    // the range and damage of the item, mostly used for weapons
     public int range = 1;
+    public int damage = 1;
     // itemType of type ItemType enum
     public ItemType itemType;
+    public int maxStack;
 
     // constructor
     public Item(GamePanel gp){
@@ -32,6 +34,11 @@ public class Item {
     // draw method
     public void draw(Graphics2D g2){
         g2.drawImage(image, worldX, worldY, gamePanel.getTileSize(), gamePanel.getTileSize(), null);
+    }
+
+    // overloaded method draw, takes x and y coordinates as parameters
+    public void draw(Graphics2D g2, int x, int y){
+        g2.drawImage(image, x, y, gamePanel.getTileSize(), gamePanel.getTileSize(), null);
     }
 
     // getCol returns int of the column that the item is held in based on the centre x coordinate

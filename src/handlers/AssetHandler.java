@@ -1,5 +1,6 @@
 package handlers;
 
+import entities.Enemy_slime;
 import entities.NPC_Wizard;
 import item.ITEM_Sword;
 import main.GamePanel;
@@ -17,9 +18,17 @@ public class AssetHandler {
 
     // setting the NPCs on the map
     public void setNPC() {
-        gamePanel.npc[0] = new NPC_Wizard(gamePanel);
-        gamePanel.npc[0].worldX = gamePanel.getTileSize() * 4;
-        gamePanel.npc[0].worldY = gamePanel.getTileSize() * 5;
+        gamePanel.npcs[0] = new NPC_Wizard(gamePanel);
+        gamePanel.npcs[0].worldX = gamePanel.getTileSize() * 4;
+        gamePanel.npcs[0].worldY = gamePanel.getTileSize() * 5;
+    }
+
+    // setting the enemies on the map
+    public void setEnemy() {
+        // slime enemy
+        gamePanel.enemies[0] = new Enemy_slime(gamePanel);
+        gamePanel.enemies[0].worldX = gamePanel.getTileSize() * 7;
+        gamePanel.enemies[0].worldY = gamePanel.getTileSize() * 7;
     }
 
     // setting the items on the map

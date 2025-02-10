@@ -14,6 +14,7 @@ public class ITEM_Sword extends Item {
         // assigning the image attribute for drawing
         image = gamePanel.utils.getImage("items", "sword_normal.png");
         itemType = ItemType.WEAPON;
+        damage = 5;
     }
 
 }

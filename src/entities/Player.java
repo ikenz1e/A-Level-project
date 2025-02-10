@@ -2,6 +2,7 @@ package entities;
 
 import java.awt.Rectangle;
 
+import UI.Inventory.Inventory;
 import handlers.InputHandler;
 import item.Item;
 import main.GamePanel;
@@ -15,6 +16,11 @@ public class Player extends Entity{
 	public Item currentWeapon;
 	public int attackCooldown = 0;
 	public Rectangle attackHitbox;
+	public int damageCooldown;
+	public int maxDamageCooldown;
+	public int attackTimer;
+
+	public Inventory inventory;
 
 	// constructor, passing in gamePanel and inputHandler
 	public Player(GamePanel gp) {
@@ -22,6 +28,8 @@ public class Player extends Entity{
 		super(gp);
 		this.inputHandler = gamePanel.inputHandler;
 		
+		inventory = new Inventory(gamePanel);
+
 		this.hitbox = new Rectangle(8, 16, 32, 32);
 		hitboxDefaultX = (int)this.hitbox.getX();
 		hitboxDefaultY = (int)this.hitbox.getY();
@@ -35,11 +43,15 @@ public class Player extends Entity{
 	public void setDefaultValues() {
 		worldX = 100;
 		worldY = 100;
+		screenX = worldX;
+		screenY = worldY;
 		speed = 4;
 		direction = "down";
-		health = 10;
-		maxHealth = 10;
+		health = 20;
+		maxHealth = 20;
 		currentWeapon = null;
+		maxDamageCooldown = 30;
+		damageCooldown = maxDamageCooldown;
 	}
 	
 	// assign all the images to their corresponding variables using the getEntityImage() method from parent class
@@ -53,6 +65,37 @@ public class Player extends Entity{
 		right1 = gamePanel.utils.getImage("player", "player_right_1.png");
 		right2 = gamePanel.utils.getImage("player", "player_right_2.png");
 		
+		attackUp1 = gamePanel.utils.getImage("player", "player_attack_up_1.png");
+		attackUp2 = gamePanel.utils.getImage("player", "player_attack_up_2.png");
+		attackDown1 = gamePanel.utils.getImage("player", "player_attack_down_1.png");
+		attackDown2 = gamePanel.utils.getImage("player", "player_attack_down_2.png");
+		attackLeft1 = gamePanel.utils.getImage("player", "player_attack_left_1.png");
+		attackLeft2 = gamePanel.utils.getImage("player", "player_attack_left_2.png");
+		attackRight1 = gamePanel.utils.getImage("player", "player_attack_right_1.png");
+		attackRight2 = gamePanel.utils.getImage("player", "player_attack_right_2.png");
+	}
+
+	// overwritten method from Entity class for taking damage
+	public boolean takeDamage(int amount){
+		// damage cooldown to prevent the player taking damage every frame
+		if(damageCooldown == 0){
+			// reset the cooldown
+			damageCooldown = maxDamageCooldown;
+			// calculate if the player has died or not, returning true/false depending on this
+			if((health-amount) <= 0){
+				System.out.println(health);
+				health = 0;
+				return true;
+			}else{
+				System.out.println(health);
+				health -= amount;
+				return false;
+			}
+		// if the cooldown has not finished, the player cannot take damage and therefore cannot die so return false
+		}else{
+			return false;
+		}
+		
 	}
 	
 	// method to handle picking up items, passing in the index in the gamePanel.items array
@@ -60,15 +103,19 @@ public class Player extends Entity{
 		// 999 is the default index with no items
 		if(itemIndex != 999){
 			// get the type of item
-			ItemType type = gamePanel.items[itemIndex].itemType;
-			switch (type) {
-				// if the item is a weapon, set the current weapon to the picked up item
-				case WEAPON:
-					currentWeapon = gamePanel.items[itemIndex];
-					break;
-				default:
-					break;
-			}
+			// ItemType type = gamePanel.items[itemIndex].itemType;
+			// switch (type) {
+			// 	// if the item is a weapon, set the current weapon to the picked up item
+			// 	case WEAPON:
+			// 		currentWeapon = gamePanel.items[itemIndex];
+			// 		break;
+			// 	default:
+			// 		break;
+			// }
+
+			inventory.addInvItem(gamePanel.items[itemIndex], 1);
+			//inventory.printInventory();
+
 			// set the space in the current items index to null to remove it
 			gamePanel.items[itemIndex] = null;
 		}
@@ -78,7 +125,7 @@ public class Player extends Entity{
 	public void attack(){
 		// if the player has a weapon and the cooldown has cooled down
 		if(currentWeapon != null && attackCooldown == 0){
-			System.out.println("attacked using: " + currentWeapon.name);
+			attacking = true;
 			attackHitbox = new Rectangle(worldX, worldY, 1, 1);
 			switch(direction){
 				case "up":
@@ -102,27 +149,51 @@ public class Player extends Entity{
 					attackHitbox.height = gamePanel.getTileSize();
 					break;
 			}
-			int npcIndex = gamePanel.collisionHandler.checkAttackCollision(attackHitbox);
-			System.out.println(npcIndex);
-			// cooldown = 30 frames / 0.5 secs
+			// get the index of the enemy that was attacked
+			int enemyIndex = gamePanel.collisionHandler.checkAttackCollision(attackHitbox);
+			// validate that the index returned is less than the length of the enemies array
+			if(enemyIndex < gamePanel.enemies.length){
+				// run the takeDamage method and check if it returns true, the enemy dies
+				if(gamePanel.enemies[enemyIndex].takeDamage(currentWeapon.damage)){
+					gamePanel.defeatEnemy(enemyIndex);
+				}
+			}
 			attackCooldown = 30;
 		}
 	}
 
 	// update function to be run in the game loop
 	public void update() {
+		if(damageCooldown > 0){
+			damageCooldown--;
+		}
+
+		if(attacking){
+			attackTimer++;
+			if(attackTimer > 10){
+				spriteNum = 2;
+			}else{
+				spriteNum = 1;
+			}
+		}else{
+			attackTimer = 0;
+		}
+
 		// if a movement key is pressed, cycle through the sprites
 		if(inputHandler.wPressed || inputHandler.aPressed || inputHandler.sPressed || inputHandler.dPressed) {
 			spriteCounter++;
 			// every 10 frames a sprite cycle should be run
-			if(spriteCounter > 10) {
-				if(spriteNum == 1) {
-					spriteNum = 2;
-				}else {
-					spriteNum = 1;
+			if(!attacking){
+				if(spriteCounter > 10) {
+					if(spriteNum == 1) {
+						spriteNum = 2;
+					}else {
+						spriteNum = 1;
+					}
+					spriteCounter = 0;
 				}
-				spriteCounter = 0;
 			}
+			
 			
 			// player movement based on user input, changing direction
 			if(inputHandler.wPressed) {
@@ -163,11 +234,15 @@ public class Player extends Entity{
 					break;
 				}
 			}
-			
+			screenX = worldX;
+			screenY = worldY;
 		}	
 
 		// set the attack cooldown to be 0 if attackCooldown - 1 is less than 0
 		attackCooldown = Math.max(0, attackCooldown - 1);
+		if(attackCooldown == 0){
+			attacking=false;
+		}
 
 		// if the player presses the attack key, attack
 		if(gamePanel.inputHandler.qPressed){

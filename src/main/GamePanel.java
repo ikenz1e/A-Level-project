@@ -3,6 +3,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Rectangle;
 
 import javax.swing.JPanel;
 
@@ -12,8 +13,10 @@ import entities.Player;
 import handlers.AssetHandler;
 import handlers.CollisionHandler;
 import handlers.InputHandler;
+import handlers.StateHandler;
 import item.Item;
 import tile.TileManager;
+import utils.State;
 import utils.Utils;
 
 public class GamePanel extends JPanel implements Runnable {
@@ -38,13 +41,15 @@ public class GamePanel extends JPanel implements Runnable {
 	public TileManager tileManager = new TileManager(this);
 	public AssetHandler assetHandler = new AssetHandler(this);
 	public Pathfinder pathFinder = new Pathfinder(this);
+	public StateHandler stateHandler = new StateHandler();
 
 	Thread gameThread;
 
 	// instantiate the player class
 	public Player player = new Player(this);
 	// objects and NPCs
-	public Entity[] npc = new Entity[10];
+	public Entity[] npcs = new Entity[10];
+	public Entity[] enemies = new Entity[10];
 	public Item[] items = new Item[10];
 
 
@@ -60,6 +65,7 @@ public class GamePanel extends JPanel implements Runnable {
 	public void setupGame() {
 		assetHandler.setNPC();
 		assetHandler.setItem();
+		assetHandler.setEnemy();
 	}
 
 	
@@ -103,15 +109,36 @@ public class GamePanel extends JPanel implements Runnable {
 	
 	public void update() {
 		
-		// update the player
-		player.update();
+		switch(stateHandler.getCurrentState()){
+			case GAME:
+				// update the player
+				player.update();
 
-		// update NPCs
-		for(Entity NPC : npc){
-			if (NPC != null){
-				NPC.update();
-			}
+				// update NPCs
+				for(Entity NPC : npcs){
+					if(NPC != null){
+						NPC.update();
+					}
+				}
+
+				// update enemies
+				for(Entity enemy : enemies){
+					if(enemy != null){
+						enemy.update();
+					}
+				}
+
+				if(inputHandler.ePressed){
+					stateHandler.changeState(State.INVENTORY);
+				}
+				break;
+			case INVENTORY:
+				if(inputHandler.escPressed){
+					stateHandler.changeState(State.GAME);
+				}
+				break;
 		}
+		
 	}
 	
 	// standard java method for drawing to a JPanel, graphics class is also a standard java class for graphical functions
@@ -121,35 +148,82 @@ public class GamePanel extends JPanel implements Runnable {
 		// the standard java class for drawing 2D graphics
 		Graphics2D g2 = (Graphics2D) g;
 		
-		//draw the map
-		tileManager.draw(g2);
+		switch (stateHandler.getCurrentState()) {
+			case GAME:
+				//draw the map
+				tileManager.draw(g2);
 		
-		// draw the player
-		player.draw(g2);
+				// draw the player
+				player.draw(g2);
+
+				for(Entity entity : npcs) {
+					if(entity != null){
+						entity.draw(g2);
+					}
+				}
+
+				for(Entity enemy : enemies){
+					if(enemy != null){
+						enemy.draw(g2);
+					}
+				}
 
 
-		g2.setColor(Color.RED);
-		if(player.attackHitbox != null){
-			g2.draw(player.attackHitbox);
-		}
+				for(Item item: items){
+					if(item != null){
+						item.draw(g2);
+					}
+				}
+				break;
+			case INVENTORY:
+				//draw the map
+				tileManager.draw(g2);
+		
+				// draw the player
+				player.draw(g2);
 
-		for(Entity entity : npc) {
-			if(entity != null){
-				entity.draw(g2);
-				g2.draw(entity.hitbox);
-			}
-		}
+				// draw npcs
+				for(Entity entity : npcs) {
+					if(entity != null){
+						entity.draw(g2);
+					}
+				}
 
-		for(Item item: items){
-			if(item != null){
-				item.draw(g2);
-			}
+				// draw enemies
+				for(Entity enemy : enemies){
+					if(enemy != null){
+						enemy.draw(g2);
+					}
+				}
+				// draw items
+				for(Item item: items){
+					if(item != null){
+						item.draw(g2);
+					}
+				}
+				
+				// apply a tint over the screen
+				g2.setColor(new Color(53, 53, 53,100));
+				g2.fill(new Rectangle(0, 0, screenWidth, screenHeight));
+				player.inventory.draw(g2);
+				break;
+			default:
+				break;
 		}
 		
 		// disposes the graphics content and release system resources, preventing issues such as memory leaks
 		g2.dispose();
 	}
 	
+	// method to defeat an enemy, takes the index of the enemy in the enemies array
+	public void defeatEnemy(int index){
+		// make sure the enemy exists
+		if(enemies[index] != null){
+			// remove the enemy 
+			enemies[index] = null;
+		}
+	}
+
 	// method for getting the tile size in another class
 	public int getTileSize() {
 		return tileSize;
@@ -161,6 +235,14 @@ public class GamePanel extends JPanel implements Runnable {
 	// method for getting max screen y
 	public int getMaxScreenRow() {
 		return maxScreenRow;
+	}
+
+	public int getScreenWidth(){
+		return screenWidth;
+	}
+
+	public int getScreenHeight(){
+		return screenHeight;
 	}
 	
 }

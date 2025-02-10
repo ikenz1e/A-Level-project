@@ -77,6 +77,8 @@ public class NPC_Wizard extends Entity {
             default:
                 break;
             }
+            screenX = worldX;
+            screenY = worldY;
         }
     }
 

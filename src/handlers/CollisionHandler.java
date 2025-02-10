@@ -118,18 +118,49 @@ public class CollisionHandler {
 		return index;
 	}
 
+	// method for checking player collisions
+	public boolean checkPlayer(Entity entity){
+		// create a temporary hitbox for the entity that is collision detecting
+		Rectangle tempHitbox = new Rectangle(entity.worldX + entity.hitbox.x, entity.worldY + entity.hitbox.y, entity.hitbox.width, entity.hitbox.height);
+		// create a temporary hitbox for the player with updated coordinates
+		Rectangle playerHitbox = new Rectangle(gamePanel.player.worldX + gamePanel.player.hitbox.x, gamePanel.player.worldY + gamePanel.player.hitbox.y, gamePanel.player.hitbox.width, gamePanel.player.hitbox.height);		
+		// edit the temporary hitbox based on which direction the entity is moving
+		switch(entity.direction){
+			case "up":
+				tempHitbox.y -= entity.speed;
+				break;
+			case "down":
+				tempHitbox.y += entity.speed;
+				break;
+			case "left":
+				tempHitbox.x -= entity.speed;
+				break;
+			case "right":
+				tempHitbox.x += entity.speed;
+				break;
+			default:
+				break;
+		}
+		// if the hitboxes intersect, a collision has been detected therefore return true, if not return false
+		if (tempHitbox.intersects(playerHitbox)){
+			return true;
+		}else{
+			return false;
+		}
+	}
+
 	public int checkAttackCollision(Rectangle attackHitbox){
 		int index = 999;
 
-		for (int i = 0; i < gamePanel.npc.length; i++){
-			if(gamePanel.npc[i] != null){
-				gamePanel.npc[i].hitbox.x += gamePanel.npc[i].worldX;
-				gamePanel.npc[i].hitbox.y += gamePanel.npc[i].worldY;
-				if(gamePanel.npc[i].hitbox.intersects(attackHitbox)){
+		for (int i = 0; i < gamePanel.enemies.length; i++){
+			if(gamePanel.enemies[i] != null){
+				gamePanel.enemies[i].hitbox.x += gamePanel.enemies[i].worldX;
+				gamePanel.enemies[i].hitbox.y += gamePanel.enemies[i].worldY;
+				if(gamePanel.enemies[i].hitbox.intersects(attackHitbox)){
 					index = i;
 				}
-				gamePanel.npc[i].hitbox.x = gamePanel.npc[i].hitboxDefaultX;
-				gamePanel.npc[i].hitbox.y = gamePanel.npc[i].hitboxDefaultY;
+				gamePanel.enemies[i].hitbox.x = gamePanel.enemies[i].hitboxDefaultX;
+				gamePanel.enemies[i].hitbox.y = gamePanel.enemies[i].hitboxDefaultY;
 			}
 		}
 

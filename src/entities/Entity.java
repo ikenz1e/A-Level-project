@@ -13,6 +13,7 @@ public class Entity {
 
 	// current entity state
 	public int worldX, worldY;
+	public int screenX, screenY;
 	public int speed;
 	public String direction;
 	int health;
@@ -23,9 +24,13 @@ public class Entity {
 	public int hitboxDefaultX;
 	public int hitboxDefaultY;
 	public boolean collision;
+	public boolean attacking;
+
+	public int attackDamage;
 	
 	// entity images
 	public BufferedImage up1, up2, down1, down2, left1, left2, right1, right2;
+	public BufferedImage attackUp1, attackUp2, attackDown1, attackDown2, attackLeft1, attackLeft2, attackRight1, attackRight2;
 	
 	// variables for cycling through images
 	public int spriteCounter = 0;
@@ -40,6 +45,8 @@ public class Entity {
 	public void setDefaultValues() {
 		worldX = 100;
 		worldY = 100;
+		screenX = worldX;
+		screenY = worldY;
 		direction = "down";
 		health = 1;
 		maxHealth = 1;
@@ -63,49 +70,127 @@ public class Entity {
 		return this.worldY;
 	}
 
+	// method for an entity to take damage
+	public boolean takeDamage(int amount){
+		// if the health - amount is less than or equal to zero, the entity will die
+		if((health - amount) <= 0){
+			// set the health to 0
+			health = 0;
+			// return true to tell the rest of the program that this entity has died
+			return true;
+		// if the entity will still be alive after taking damage
+		}else{
+			// decrease the health
+			health -= amount;
+			// return false to tell the rest of the program the entity is still alive
+			return false;
+		}
+	}
+
 	// draw method to be called in the paintComponent() method of the gamePanel
 	public void draw(Graphics2D g2) {
 		
 		// the current image to be drawn to the screen
 		BufferedImage currentImage = null;
+		int width = gamePanel.getTileSize();
+		int height = gamePanel.getTileSize();
 		
-		// find which image based on the sprite cycle and the players direction
-		switch(direction) {
-		case "up":
-			if (spriteNum == 1) {
-				currentImage = up1;
-			}else if (spriteNum == 2) {
-				currentImage = up2;
+		int xOffset = 0;
+		int yOffset = 0;
+
+		// find which image based on the sprite cycle and the players direction and attacking status
+		if(!attacking){
+			switch(direction) {
+				case "up":
+					if (spriteNum == 1) {
+						currentImage = up1;
+					}else if (spriteNum == 2) {
+						currentImage = up2;
+					}
+					break;
+				case "down":
+					if (spriteNum == 1) {
+						currentImage = down1;
+					}else if (spriteNum == 2) {
+						currentImage = down2;
+					}
+					break;
+				case "left":
+					if (spriteNum == 1) {
+						currentImage = left1;
+					}else if (spriteNum == 2) {
+						currentImage = left2;
+					}
+					break;
+				case "right":
+					if (spriteNum == 1) {
+						currentImage = right1;
+					}else if (spriteNum == 2) {
+						currentImage = right2;
+					}
+					break;
+				default:
+					currentImage = down1;
+					break;
+				}
+			xOffset = 0;
+			yOffset = 0;
+			width = gamePanel.getTileSize();
+			height = gamePanel.getTileSize();
+		}else{
+			switch (direction) {
+				case "up":
+					if(spriteNum == 1){
+						currentImage = attackUp1;
+					}else if (spriteNum == 2){
+						currentImage = attackUp2;
+					}
+					xOffset = 0;
+					yOffset = -gamePanel.getTileSize();
+					width = gamePanel.getTileSize();
+					height = gamePanel.getTileSize() * 2;
+					break;
+				case "down":
+					if(spriteNum == 1){
+						currentImage = attackDown1;
+					}else if(spriteNum == 2){
+						currentImage = attackDown2;
+					}
+					xOffset = 0;
+					yOffset = 0;
+					width = gamePanel.getTileSize();
+					height = gamePanel.getTileSize() * 2;
+					break;
+				case "left":
+					if(spriteNum == 1){
+						currentImage = attackLeft1;
+					}else if(spriteNum == 2){
+						currentImage = attackLeft2;
+					}
+					xOffset = -gamePanel.getTileSize();
+					yOffset = 0;
+					width = gamePanel.getTileSize() * 2;
+					height = gamePanel.getTileSize();
+					break;
+				case "right":
+					if(spriteNum == 1){
+						currentImage = attackRight1;
+					}else if(spriteNum == 2){
+						currentImage = attackRight2;
+					}
+					xOffset = 0;
+					yOffset = 0;
+					width = gamePanel.getTileSize() * 2;
+					height = gamePanel.getTileSize();
+					break;
+				default:
+					break;
 			}
-			break;
-		case "down":
-			if (spriteNum == 1) {
-				currentImage = down1;
-			}else if (spriteNum == 2) {
-				currentImage = down2;
-			}
-			break;
-		case "left":
-			if (spriteNum == 1) {
-				currentImage = left1;
-			}else if (spriteNum == 2) {
-				currentImage = left2;
-			}
-			break;
-		case "right":
-			if (spriteNum == 1) {
-				currentImage = right1;
-			}else if (spriteNum == 2) {
-				currentImage = right2;
-			}
-			break;
-		default:
-			currentImage = down1;
-			break;
 		}
 		
+		
 		// draw the image to the screen using the Graphics2D library
-		g2.drawImage(currentImage, worldX, worldY, gamePanel.getTileSize(), gamePanel.getTileSize(), null);
+		g2.drawImage(currentImage, screenX + xOffset, screenY + yOffset, width, height, null);
 		
 	}
 
@@ -195,15 +280,19 @@ public class Entity {
 			switch(direction) {
 			case "up":
 				worldY -= speed;
+				screenY = worldY;
 				break;
 			case "down":
 				worldY += speed;
+				screenY = worldY;
 				break;
 			case "left":
 				worldX -= speed;
+				screenX = worldX;
 				break;
 			case "right":
 				worldX += speed;
+				screenX = worldX;
 				break;
 			default:
 				break;
