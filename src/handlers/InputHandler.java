@@ -7,8 +7,10 @@ import java.awt.event.MouseListener;
 
 public class InputHandler implements KeyListener, MouseListener{
 
-	public boolean wPressed, sPressed, dPressed, aPressed, qPressed, ePressed, escPressed;
+	public boolean wPressed, sPressed, dPressed, aPressed, qPressed, ePressed, escPressed,  upPressed, downPressed, leftPressed, rightPressed;
 	
+	public int lastKeyPress;
+
 	@Override
 	public void keyTyped(KeyEvent e) {
 		
@@ -44,10 +46,24 @@ public class InputHandler implements KeyListener, MouseListener{
 		case KeyEvent.VK_ESCAPE:
 			escPressed = true;
 			break;
+		case KeyEvent.VK_UP:
+			upPressed = true;
+			break;
+		case KeyEvent.VK_DOWN:
+			downPressed = true;
+			break;
+		case KeyEvent.VK_LEFT:
+			leftPressed = true;
+			break;
+		case KeyEvent.VK_RIGHT:
+			rightPressed = true;
+			break;
 		default:
 			break;
 		}
 		
+		lastKeyPress = code;
+
 	}
 
 	// the method called when the user releases a key
@@ -79,9 +95,23 @@ public class InputHandler implements KeyListener, MouseListener{
 		case KeyEvent.VK_ESCAPE:
 			escPressed = false;
 			break;
+		case KeyEvent.VK_UP:
+			upPressed = false;
+			break;
+		case KeyEvent.VK_DOWN:
+			downPressed = false;
+			break;
+		case KeyEvent.VK_LEFT:
+			leftPressed = false;
+			break;
+		case KeyEvent.VK_RIGHT:
+			rightPressed = false;
+			break;
 		default:
 			break;
 		}
+
+		lastKeyPress = -1;
 	}
 
 	@Override

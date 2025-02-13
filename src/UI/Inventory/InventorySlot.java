@@ -8,11 +8,18 @@ import java.awt.Rectangle;
 import item.Item;
 
 public class InventorySlot {
-    
+
+    // the size of a slot on the screen in px
+    public static int size = 48;
+
     // attributes that each slot will have, each will have an item, the number of items and the maximum number of items.
     private Item item;
     private int count;
     private int maxCount;
+
+    public int xCoord, yCoord;
+
+    public Color borderColor = new Color(255, 255, 255);
 
     // method to see if a slot is holding an item
     public boolean hasItem(){
@@ -52,11 +59,13 @@ public class InventorySlot {
         // the width and height of the slot
         int width = 48;
         int height = 48;
+        xCoord = x;
+        yCoord = y;
 
         // creating a rectangle to be drawn
-        Rectangle shape = new Rectangle(x, y, width, height);
+        Rectangle shape = new Rectangle(xCoord, yCoord, width, height);
         // setting the colour of the outline
-        g2.setColor(new Color(255, 255, 255));
+        g2.setColor(borderColor);
         // drawing the rectangle
         g2.draw(shape);
         // drawing the item within the slot

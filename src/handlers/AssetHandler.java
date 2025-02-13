@@ -2,6 +2,7 @@ package handlers;
 
 import entities.Enemy_slime;
 import entities.NPC_Wizard;
+import item.ITEM_Apple;
 import item.ITEM_Sword;
 import main.GamePanel;
 
@@ -37,6 +38,10 @@ public class AssetHandler {
         gamePanel.items[0] = new ITEM_Sword(gamePanel);
         gamePanel.items[0].worldX = gamePanel.getTileSize() * 6;
         gamePanel.items[0].worldY = gamePanel.getTileSize() * 7;
+
+        gamePanel.items[1] = new ITEM_Apple(gamePanel);
+        gamePanel.items[1].worldX = gamePanel.getTileSize() * 7;
+        gamePanel.items[1].worldY = gamePanel.getTileSize() * 7;
     }
 
 }

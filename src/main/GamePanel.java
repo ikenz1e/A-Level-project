@@ -136,6 +136,9 @@ public class GamePanel extends JPanel implements Runnable {
 				if(inputHandler.escPressed){
 					stateHandler.changeState(State.GAME);
 				}
+
+				player.inventory.update();
+
 				break;
 		}
 		

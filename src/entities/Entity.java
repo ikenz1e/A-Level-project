@@ -92,9 +92,11 @@ public class Entity {
 		
 		// the current image to be drawn to the screen
 		BufferedImage currentImage = null;
+		// width and height of the image to be drawn
 		int width = gamePanel.getTileSize();
 		int height = gamePanel.getTileSize();
 		
+		// offsets to the screenX and screenY attributes
 		int xOffset = 0;
 		int yOffset = 0;
 

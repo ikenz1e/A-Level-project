@@ -4,6 +4,7 @@ import java.awt.Rectangle;
 
 import UI.Inventory.Inventory;
 import handlers.InputHandler;
+import item.ITEM_Sword;
 import item.Item;
 import main.GamePanel;
 import utils.ItemType;
@@ -28,7 +29,7 @@ public class Player extends Entity{
 		super(gp);
 		this.inputHandler = gamePanel.inputHandler;
 		
-		inventory = new Inventory(gamePanel);
+		inventory = new Inventory(gamePanel, this);
 
 		this.hitbox = new Rectangle(8, 16, 32, 32);
 		hitboxDefaultX = (int)this.hitbox.getX();
@@ -49,7 +50,6 @@ public class Player extends Entity{
 		direction = "down";
 		health = 20;
 		maxHealth = 20;
-		currentWeapon = null;
 		maxDamageCooldown = 30;
 		damageCooldown = maxDamageCooldown;
 	}
@@ -102,19 +102,9 @@ public class Player extends Entity{
 	public void pickUpItem(int itemIndex){
 		// 999 is the default index with no items
 		if(itemIndex != 999){
-			// get the type of item
-			// ItemType type = gamePanel.items[itemIndex].itemType;
-			// switch (type) {
-			// 	// if the item is a weapon, set the current weapon to the picked up item
-			// 	case WEAPON:
-			// 		currentWeapon = gamePanel.items[itemIndex];
-			// 		break;
-			// 	default:
-			// 		break;
-			// }
-
 			inventory.addInvItem(gamePanel.items[itemIndex], 1);
-			//inventory.printInventory();
+			inventory.printInventory();
+			System.out.println("------------------");
 
 			// set the space in the current items index to null to remove it
 			gamePanel.items[itemIndex] = null;
