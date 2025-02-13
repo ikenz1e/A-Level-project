@@ -9,6 +9,8 @@ public class InputHandler implements KeyListener, MouseListener{
 
 	public boolean wPressed, sPressed, dPressed, aPressed, qPressed, ePressed, escPressed,  upPressed, downPressed, leftPressed, rightPressed;
 	
+	public boolean keyPressed;
+
 	public int lastKeyPress;
 
 	@Override
@@ -61,8 +63,6 @@ public class InputHandler implements KeyListener, MouseListener{
 		default:
 			break;
 		}
-		
-		lastKeyPress = code;
 
 	}
 
@@ -112,6 +112,7 @@ public class InputHandler implements KeyListener, MouseListener{
 		}
 
 		lastKeyPress = -1;
+		keyPressed = false;
 	}
 
 	@Override

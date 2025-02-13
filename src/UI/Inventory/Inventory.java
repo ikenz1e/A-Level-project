@@ -159,17 +159,21 @@ public class Inventory {
     }
 
     public void update(){
-        if(gamePanel.inputHandler.upPressed && gamePanel.inputHandler.lastKeyPress != KeyEvent.VK_UP){
+        if(gamePanel.inputHandler.upPressed && !gamePanel.inputHandler.keyPressed){
             selectSlot(currentSelectedSlotRow, currentSelectedSlotCol-1);
+            gamePanel.inputHandler.keyPressed = true;
         }
-        if(gamePanel.inputHandler.downPressed && gamePanel.inputHandler.lastKeyPress != KeyEvent.VK_DOWN){
+        if(gamePanel.inputHandler.downPressed && !gamePanel.inputHandler.keyPressed){
             selectSlot(currentSelectedSlotRow, currentSelectedSlotCol+1);
+            gamePanel.inputHandler.keyPressed = true;
         }
-        if(gamePanel.inputHandler.leftPressed && gamePanel.inputHandler.lastKeyPress != KeyEvent.VK_LEFT){
+        if(gamePanel.inputHandler.leftPressed && !gamePanel.inputHandler.keyPressed){
             selectSlot(currentSelectedSlotRow-1, currentSelectedSlotCol);
+            gamePanel.inputHandler.keyPressed = true;
         }
-        if(gamePanel.inputHandler.rightPressed && gamePanel.inputHandler.lastKeyPress != KeyEvent.VK_RIGHT){
+        if(gamePanel.inputHandler.rightPressed && !gamePanel.inputHandler.keyPressed){
             selectSlot(currentSelectedSlotRow+1, currentSelectedSlotCol);
+            gamePanel.inputHandler.keyPressed = true;
         }
     }
 
