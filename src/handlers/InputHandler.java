@@ -11,8 +11,6 @@ public class InputHandler implements KeyListener, MouseListener{
 	
 	public boolean keyPressed;
 
-	public int lastKeyPress;
-
 	@Override
 	public void keyTyped(KeyEvent e) {
 		
@@ -110,8 +108,6 @@ public class InputHandler implements KeyListener, MouseListener{
 		default:
 			break;
 		}
-
-		lastKeyPress = -1;
 		keyPressed = false;
 	}
 

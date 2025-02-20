@@ -2,12 +2,13 @@ package entities;
 
 import java.awt.Rectangle;
 
+import AI.EnemyAI;
 import main.GamePanel;
 
 public class Enemy_slime extends Entity {
 
     // cooldown for selecting a random direction
-    private int directionCooldown = 60;
+    private EnemyAI brain = new EnemyAI(gamePanel, this);
 
     // constructor, use inherited Entity constructor
     public Enemy_slime(GamePanel gp) {
@@ -17,7 +18,7 @@ public class Enemy_slime extends Entity {
     // set the defaults for all necessary attributes and get images
     public void setDefaultValues(){
         this.hitbox = new Rectangle(8, 16, 32, 32);
-        this.onPath = false;
+        this.onPath = true;
         speed = 1;
         health = 10;
         maxHealth = 10;
@@ -42,21 +43,11 @@ public class Enemy_slime extends Entity {
 
     // setAction used to change direction
     public void setAction(){
-        directionCooldown--;
-        if(directionCooldown == 0){
-            directionCooldown = 60;
+        if(onPath){
+            int goalCol = brain.getTargetCol();
+            int goalRow = brain.getTargetRow();
 
-            // random number between 0 and 100
-            int num = (int) (Math.random() * 100);
-            if (num < 25){
-                direction = "up";
-            }else if(num < 50){
-                direction = "down";
-            }else if(num < 75){
-                direction = "left";
-            }else{
-                direction = "right";
-            }
+            searchPath(goalCol, goalRow);
         }
         
     }

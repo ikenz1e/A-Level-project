@@ -67,9 +67,9 @@ public class Inventory {
 
         gamePanel = gp;
 
-        selectedSlot = invArray[0][0];
         currentSelectedSlotRow = 0;
         currentSelectedSlotCol = 0;
+        selectedSlot = invArray[currentSelectedSlotCol][currentSelectedSlotRow];
     }
 
     // method to add an item to the inventory
@@ -79,6 +79,7 @@ public class Inventory {
 
         InventorySlot emptySlot = null;
         InventorySlot itemSlot = null;
+        // if the item is not a weapon or it is a weapon and there is an item in the weapon slot
         if(item.itemType != ItemType.WEAPON || (item.itemType == ItemType.WEAPON && utilArray[WEAPON_SLOT].hasItem())){
             // loop through all the slots in the inventory
             for(int i = 0; i < size; i++){
@@ -92,6 +93,14 @@ public class Inventory {
                         itemSlot = slot;
                     }
                 }
+            }
+
+            // if a slot with an item in it has been found, add this item to the slot
+            if(itemSlot != null){
+                leftOver = itemSlot.addItem(amount);
+            // if a slot with the item was not found, add the item to the empty slot
+            }else if(emptySlot != null){
+                emptySlot.addNewItem(item, amount);
             }
         }else{
              /*
@@ -111,15 +120,7 @@ public class Inventory {
                 }
                 slotTracker++;
             }
-        }
-
-        // if a slot with an item in it has been found, add this item to the slot
-        if(itemSlot != null){
-            leftOver = itemSlot.addItem(amount);
-        // if a slot with the item was not found, add the item to the empty slot
-        }else if(emptySlot != null){
-            emptySlot.addNewItem(item, amount);
-        }
+        }       
 
         // return the number of leftover items for use elsewhere 
         return leftOver;
@@ -138,32 +139,42 @@ public class Inventory {
         }
     }
 
+    // method to select a new slot, takes an int row and int col as parametes
     public void selectSlot(int row, int col){
         
+        // set the select slot col/row to the parameter col/row
         currentSelectedSlotCol = col;
         currentSelectedSlotRow = row;
         
+        // if the column goes below 0, it has gone too far to the left, set it to the right most column
         if(currentSelectedSlotCol < 0){
             currentSelectedSlotCol = size-1;
+        // vice versa for if it goes too far to the right
         }else if(currentSelectedSlotCol >= size){
             currentSelectedSlotCol = 0;
         }
 
+        // if the row goes below zero, set it to the top row
         if(currentSelectedSlotRow < 0){
             currentSelectedSlotRow = size-1;
+        // vice versa for if the row goes too high
         } else if(currentSelectedSlotRow >= size){
             currentSelectedSlotRow = 0;
         }
+        // set the selected slot to the new slot in the inventory 
         selectedSlot = invArray[currentSelectedSlotCol][currentSelectedSlotRow];
     }
 
     public void useSelectedItem(){
+        // if the slot has an item, use it 
         if(selectedSlot.hasItem()){
+            // if the item is a weapon, set it to the current weapon
             if (selectedSlot.getItem().itemType == ItemType.WEAPON){
                 Item weapon = selectedSlot.getItem();
                 selectedSlot.addNewItem(gamePanel.player.currentWeapon, 1);
                 gamePanel.player.currentWeapon = weapon;
                 utilArray[WEAPON_SLOT].addNewItem(weapon, 1);
+            // if it is a normal item, use it
             }else{
                 selectedSlot.getItem().use();
             }
@@ -190,7 +201,6 @@ public class Inventory {
         if(gamePanel.inputHandler.ePressed && !gamePanel.inputHandler.keyPressed){
             useSelectedItem();
             gamePanel.inputHandler.keyPressed = true;
-
         }
     }
 

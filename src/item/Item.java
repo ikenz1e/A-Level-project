@@ -52,6 +52,6 @@ public class Item {
     }
 
     public void use(){
-        return;
+        System.out.println("used: " + name);
     }
 }

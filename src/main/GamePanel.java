@@ -7,6 +7,7 @@ import java.awt.Rectangle;
 
 import javax.swing.JPanel;
 
+import AI.EnemyAI;
 import AI.Pathfinder;
 import entities.Entity;
 import entities.Player;

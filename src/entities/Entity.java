@@ -25,6 +25,7 @@ public class Entity {
 	public int hitboxDefaultY;
 	public boolean collision;
 	public boolean attacking;
+	public int range = 0;
 
 	public int attackDamage;
 	
