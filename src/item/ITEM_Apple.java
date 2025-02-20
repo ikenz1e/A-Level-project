@@ -13,5 +13,9 @@ public class ITEM_Apple extends Item {
         image = gamePanel.utils.getImage("items", "apple.png");
         itemType = ItemType.FOOD;
     }
+
+    public void use(){
+        System.out.println("used apple");
+    }
     
 }

@@ -4,10 +4,8 @@ import java.awt.Rectangle;
 
 import UI.Inventory.Inventory;
 import handlers.InputHandler;
-import item.ITEM_Sword;
 import item.Item;
 import main.GamePanel;
-import utils.ItemType;
 
 public class Player extends Entity{
 
@@ -103,8 +101,6 @@ public class Player extends Entity{
 		// 999 is the default index with no items
 		if(itemIndex != 999){
 			inventory.addInvItem(gamePanel.items[itemIndex], 1);
-			inventory.printInventory();
-			System.out.println("------------------");
 
 			// set the space in the current items index to null to remove it
 			gamePanel.items[itemIndex] = null;

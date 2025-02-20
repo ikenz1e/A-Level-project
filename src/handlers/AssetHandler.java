@@ -4,6 +4,7 @@ import entities.Enemy_slime;
 import entities.NPC_Wizard;
 import item.ITEM_Apple;
 import item.ITEM_Sword;
+import item.ITEM_Sword_Green;
 import main.GamePanel;
 
 public class AssetHandler {
@@ -42,6 +43,10 @@ public class AssetHandler {
         gamePanel.items[1] = new ITEM_Apple(gamePanel);
         gamePanel.items[1].worldX = gamePanel.getTileSize() * 7;
         gamePanel.items[1].worldY = gamePanel.getTileSize() * 7;
+
+        gamePanel.items[2] = new ITEM_Sword_Green(gamePanel);
+        gamePanel.items[2].worldX = gamePanel.getTileSize() * 8;
+        gamePanel.items[2].worldY = gamePanel.getTileSize() * 7;
     }
 
 }

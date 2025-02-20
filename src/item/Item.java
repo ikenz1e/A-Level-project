@@ -50,4 +50,8 @@ public class Item {
     public int getRow(){
         return (worldY + gamePanel.getTileSize()/2) / gamePanel.getTileSize();
     }
+
+    public void use(){
+        return;
+    }
 }

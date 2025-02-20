@@ -7,7 +7,6 @@ import utils.ItemType;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
-import java.awt.event.KeyEvent;
 
 import entities.Entity;
 
@@ -158,6 +157,19 @@ public class Inventory {
         selectedSlot = invArray[currentSelectedSlotCol][currentSelectedSlotRow];
     }
 
+    public void useSelectedItem(){
+        if(selectedSlot.hasItem()){
+            if (selectedSlot.getItem().itemType == ItemType.WEAPON){
+                Item weapon = selectedSlot.getItem();
+                selectedSlot.addNewItem(gamePanel.player.currentWeapon, 1);
+                gamePanel.player.currentWeapon = weapon;
+                utilArray[WEAPON_SLOT].addNewItem(weapon, 1);
+            }else{
+                selectedSlot.getItem().use();
+            }
+        }
+    }
+
     public void update(){
         if(gamePanel.inputHandler.upPressed && !gamePanel.inputHandler.keyPressed){
             selectSlot(currentSelectedSlotRow, currentSelectedSlotCol-1);
@@ -174,6 +186,11 @@ public class Inventory {
         if(gamePanel.inputHandler.rightPressed && !gamePanel.inputHandler.keyPressed){
             selectSlot(currentSelectedSlotRow+1, currentSelectedSlotCol);
             gamePanel.inputHandler.keyPressed = true;
+        }
+        if(gamePanel.inputHandler.ePressed && !gamePanel.inputHandler.keyPressed){
+            useSelectedItem();
+            gamePanel.inputHandler.keyPressed = true;
+
         }
     }
 
