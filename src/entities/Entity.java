@@ -4,6 +4,7 @@ import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 
+import AI.EnemyState;
 import main.GamePanel;
 
 // parent class for all entities, including items, the player and NPCs
@@ -16,9 +17,10 @@ public class Entity {
 	public int screenX, screenY;
 	public int speed;
 	public String direction;
-	int health;
-	int maxHealth;
+	public int health;
+	public int maxHealth;
 	public boolean onPath = false;
+	public EnemyState currentState = EnemyState.IDLE;
 
 	public Rectangle hitbox;
 	public int hitboxDefaultX;
@@ -26,6 +28,7 @@ public class Entity {
 	public boolean collision;
 	public boolean attacking;
 	public int range = 0;
+	public int viewDistance = 0;
 
 	public int attackDamage;
 	

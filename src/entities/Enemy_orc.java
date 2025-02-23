@@ -6,43 +6,41 @@ import AI.EnemyAI;
 import AI.EnemyState;
 import main.GamePanel;
 
-public class Enemy_slime extends Entity {
+public class Enemy_orc extends Entity{
 
     // cooldown for selecting a random direction
     private EnemyAI brain = new EnemyAI(gamePanel, this);
     
     private int moveCountdown = 60;
 
-    // constructor, use inherited Entity constructor
-    public Enemy_slime(GamePanel gp) {
+    public Enemy_orc(GamePanel gp) {
         super(gp);
     }
 
-    // set the defaults for all necessary attributes and get images
     public void setDefaultValues(){
         this.hitbox = new Rectangle(8, 16, 32, 32);
         this.onPath = true;
-        speed = 1;
-        health = 50;
-        maxHealth = 50;
-        attackDamage = 5;
+        speed = 2;
+        health = 150;
+        maxHealth = 150;
+        attackDamage = 10;
         screenX = worldX;
         screenY = worldY;
         direction = "down";
-        viewDistance = 3;
+        viewDistance = 4;
+        range = 2;
         getImages();
     }
 
-    // load all images into attributes
     public void getImages(){
-        up1 = gamePanel.utils.getImage("enemies", "slime_down_1.png");
-        up2 = gamePanel.utils.getImage("enemies", "slime_down_2.png");
-        down1 = gamePanel.utils.getImage("enemies", "slime_down_1.png");
-        down2 = gamePanel.utils.getImage("enemies", "slime_down_2.png");
-        left1 = gamePanel.utils.getImage("enemies", "slime_down_1.png");
-        left2 = gamePanel.utils.getImage("enemies", "slime_down_2.png");
-        right1 = gamePanel.utils.getImage("enemies", "slime_down_1.png");
-        right2 = gamePanel.utils.getImage("enemies", "slime_down_2.png");
+        up1 = gamePanel.utils.getImage("enemies", "orc_up_1.png");
+        up2 = gamePanel.utils.getImage("enemies", "orc_up_2.png");
+        down1 = gamePanel.utils.getImage("enemies", "orc_down_1.png");
+        down2 = gamePanel.utils.getImage("enemies", "orc_down_2.png");
+        left1 = gamePanel.utils.getImage("enemies", "orc_left_1.png");
+        left2 = gamePanel.utils.getImage("enemies", "orc_left_2.png");
+        right1 = gamePanel.utils.getImage("enemies", "orc_right_1.png");
+        right2 = gamePanel.utils.getImage("enemies", "orc_right_2.png");
     }
 
     // setAction used to change direction
@@ -117,5 +115,4 @@ public class Enemy_slime extends Entity {
             screenY = worldY;
         }
     }
-
 }

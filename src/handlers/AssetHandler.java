@@ -1,5 +1,6 @@
 package handlers;
 
+import entities.Enemy_orc;
 import entities.Enemy_slime;
 import entities.NPC_Wizard;
 import item.ITEM_Apple;
@@ -31,6 +32,11 @@ public class AssetHandler {
         gamePanel.enemies[0] = new Enemy_slime(gamePanel);
         gamePanel.enemies[0].worldX = gamePanel.getTileSize() * 7;
         gamePanel.enemies[0].worldY = gamePanel.getTileSize() * 7;
+
+        // orc enemy
+        gamePanel.enemies[1] = new Enemy_orc(gamePanel);
+        gamePanel.enemies[1].worldX = gamePanel.getTileSize() * 5;
+        gamePanel.enemies[1].worldY = gamePanel.getTileSize() * 6;
     }
 
     // setting the items on the map
