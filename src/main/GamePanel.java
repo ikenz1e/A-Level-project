@@ -50,7 +50,7 @@ public class GamePanel extends JPanel implements Runnable {
 	// objects and NPCs
 	public Entity[] npcs = new Entity[10];
 	public Entity[] enemies = new Entity[10];
-	public Item[] items = new Item[10];
+	public Item[] items = new Item[15];
 
 
 	// constructor

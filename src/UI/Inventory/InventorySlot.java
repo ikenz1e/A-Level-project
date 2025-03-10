@@ -49,6 +49,14 @@ public class InventorySlot {
         return leftOver;
     }
 
+    public void removeItem(){
+        if(count == 0) { return; }
+        count--;
+        if (count == 0){
+            item = null;
+        }
+    }
+
     // method to get the number of items in a slot
     public int getCount(){
         return count;

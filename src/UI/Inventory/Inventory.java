@@ -27,7 +27,7 @@ public class Inventory {
     public final int CHESTPLATE_SLOT = 3;
     public final int PANTS_SLOT = 4;
 
-    Hashtable<ItemType, Integer> utilSlots = new Hashtable<ItemType, Integer>();
+    Hashtable<ItemType, Integer> utilSlotIndexes = new Hashtable<ItemType, Integer>();
 
     // main array for storing all items in the inventory 2D array[column][row]
     private InventorySlot[][] invArray;
@@ -75,11 +75,11 @@ public class Inventory {
         selectedSlot = invArray[currentSelectedSlotCol][currentSelectedSlotRow];
         
         // assign all keys and values in the utilSlots hash table
-        utilSlots.put(ItemType.WEAPON, WEAPON_SLOT);
-        utilSlots.put(ItemType.SHIELD, SHIELD_SLOT);
-        utilSlots.put(ItemType.HELMET, HELMET_SLOT);
-        utilSlots.put(ItemType.CHESTPLATE, CHESTPLATE_SLOT);
-        utilSlots.put(ItemType.PANTS, PANTS_SLOT);
+        utilSlotIndexes.put(ItemType.WEAPON, WEAPON_SLOT);
+        utilSlotIndexes.put(ItemType.SHIELD, SHIELD_SLOT);
+        utilSlotIndexes.put(ItemType.HELMET, HELMET_SLOT);
+        utilSlotIndexes.put(ItemType.CHESTPLATE, CHESTPLATE_SLOT);
+        utilSlotIndexes.put(ItemType.PANTS, PANTS_SLOT);
     }
 
     // method to add an item to the inventory
@@ -157,6 +157,19 @@ public class Inventory {
         
         // return the number of leftover items for use elsewhere 
         return leftOver;
+    }
+
+    public void removeItem(Item item){
+        // linear search to find the required item
+        for(int i = 0; i < size; i++){
+            for (InventorySlot slot : invArray[i]){
+                if(slot.hasItem() && slot.getItem() == item){
+                    slot.removeItem();
+                    return;
+                }
+            }
+        }
+
     }
 
     // used for testing , will print out all elements in the inventory array 
@@ -237,11 +250,15 @@ public class Inventory {
         }
     }
 
-    // will be called in the use() method of item class for armour items
-    public void useArmour(Item armourPiece){
+    // will be called in the use() method of item class for utility items
+    public void useUtil(Item armourPiece){
         ItemType type = armourPiece.itemType;
-        utilArray[utilSlots.get(type)].addNewItem(armourPiece, 1);
-        addInvItem(armourPiece, 1);
+        removeItem(armourPiece);
+        Item oldArmour = utilArray[utilSlotIndexes.get(type)].getItem();
+        addInvItem(oldArmour, 1);
+        utilArray[utilSlotIndexes.get(type)].removeItem();
+        utilArray[utilSlotIndexes.get(type)].addNewItem(armourPiece, 1);
+        gamePanel.player.updateEquipment();
     }
 
     public void draw(Graphics2D g2){

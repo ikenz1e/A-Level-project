@@ -14,4 +14,9 @@ public class ITEM_Apple extends Item {
         itemType = ItemType.FOOD;
     }
     
+    public void use(){
+        gamePanel.player.addHealth(4);
+        gamePanel.player.inventory.removeItem(this);
+    }
+
 }

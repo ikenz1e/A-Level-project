@@ -24,8 +24,8 @@ public class Enemy_slime extends Entity {
         this.hitbox = new Rectangle(8, 16, 32, 32);
         this.onPath = true;
         speed = 1;
-        health = 50;
-        maxHealth = 50;
+        health = 20;
+        maxHealth = 20;
         attackDamage = 5;
         screenX = worldX;
         screenY = worldY;

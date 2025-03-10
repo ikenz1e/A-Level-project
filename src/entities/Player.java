@@ -3,9 +3,11 @@ package entities;
 import java.awt.Rectangle;
 
 import UI.Inventory.Inventory;
+import UI.Inventory.InventorySlot;
 import handlers.InputHandler;
 import item.Item;
 import main.GamePanel;
+import utils.ItemType;
 
 public class Player extends Entity{
 
@@ -18,6 +20,7 @@ public class Player extends Entity{
 	public int damageCooldown;
 	public int maxDamageCooldown;
 	public int attackTimer;
+	public float defence;
 
 	public Inventory inventory;
 
@@ -79,6 +82,8 @@ public class Player extends Entity{
 		if(damageCooldown == 0){
 			// reset the cooldown
 			damageCooldown = maxDamageCooldown;
+			// including defence
+			amount *= 1 - defence;
 			// calculate if the player has died or not, returning true/false depending on this
 			if((health-amount) <= 0){
 				System.out.println(health);
@@ -149,7 +154,19 @@ public class Player extends Entity{
 	}
 
 	public void updateEquipment(){
-		System.out.println("update equipment");
+		// start at 0
+		defence = 0;
+		// iterate through the utility array
+		for(InventorySlot slot : inventory.utilArray){
+			// if the item isnt a weapon, add its damage (defence amount) to the defence
+			if(slot.hasItem() && slot.getItem().itemType != ItemType.WEAPON){
+				defence += slot.getItem().damage;
+			}
+		}
+
+		// divide the defence by 100 to create a percentage
+		defence /= 100;
+		System.out.println(defence);
 	}
 
 	// update function to be run in the game loop
@@ -239,6 +256,12 @@ public class Player extends Entity{
 			attack();
 		}
 
+	}
+
+	public void addHealth(int amount){
+		// set the health to either the health + amount of the maximum health if health + amount > maxHealth
+		health = Math.min(health + amount, maxHealth);
+		System.out.println(health);
 	}
 	
 }

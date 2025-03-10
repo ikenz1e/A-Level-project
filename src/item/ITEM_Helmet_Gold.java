@@ -10,13 +10,11 @@ public class ITEM_Helmet_Gold extends Item {
         name = "gold helmet";
         image = gamePanel.utils.getImage("items", "helmet_gold.png");
         itemType = ItemType.HELMET;
-        damage = 20;
+        damage = 15;
     }
 
     public void use(){
-        Item item = gamePanel.player.inventory.utilArray[gamePanel.player.inventory.HELMET_SLOT].getItem();
-        gamePanel.player.inventory.addInvItem(item, 1);
-        gamePanel.player.inventory.utilArray[gamePanel.player.inventory.HELMET_SLOT].addNewItem(this, 1);
+        gamePanel.player.inventory.useUtil(this);
     }
     
 }

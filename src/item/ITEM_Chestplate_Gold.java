@@ -16,9 +16,7 @@ public class ITEM_Chestplate_Gold extends Item{
     }
 
     public void use(){
-        Item item = gamePanel.player.inventory.utilArray[gamePanel.player.inventory.CHESTPLATE_SLOT].getItem();
-        gamePanel.player.inventory.addInvItem(item, 1);
-        gamePanel.player.inventory.utilArray[gamePanel.player.inventory.CHESTPLATE_SLOT].addNewItem(this, 1);
+        gamePanel.player.inventory.useUtil(this);
     }
 
 }
