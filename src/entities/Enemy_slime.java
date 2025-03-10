@@ -9,9 +9,10 @@ import main.GamePanel;
 public class Enemy_slime extends Entity {
 
     // cooldown for selecting a random direction
-    private EnemyAI brain = new EnemyAI(gamePanel, this);
-    
     private int moveCountdown = 60;
+
+    // creating an instance of the EnemyAI class
+    private EnemyAI brain = new EnemyAI(gamePanel, this);
 
     // constructor, use inherited Entity constructor
     public Enemy_slime(GamePanel gp) {
@@ -30,6 +31,8 @@ public class Enemy_slime extends Entity {
         screenY = worldY;
         direction = "down";
         viewDistance = 3;
+        aggressiveness = 0.2f;
+        range = 1;
         getImages();
     }
 
@@ -45,15 +48,19 @@ public class Enemy_slime extends Entity {
         right2 = gamePanel.utils.getImage("enemies", "slime_down_2.png");
     }
 
-    // setAction used to change direction
+    // setAction, called first in update() method
     public void setAction(){
+        // calculate state
         currentState = brain.getCurrentState();
+        // if pathfinding
         if(onPath){
+            // if not idle, calulate a path
             if(currentState != EnemyState.IDLE){
                 int goalCol = brain.getTargetCol();
                 int goalRow = brain.getTargetRow();
 
                 searchPath(goalCol, goalRow);
+            // if idle, move randomly
             }else{
                 if(moveCountdown == 0){
                     moveCountdown = 60;

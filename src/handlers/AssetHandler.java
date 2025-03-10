@@ -4,8 +4,13 @@ import entities.Enemy_orc;
 import entities.Enemy_slime;
 import entities.NPC_Wizard;
 import item.ITEM_Apple;
+import item.ITEM_Chestplate;
+import item.ITEM_Chestplate_Gold;
+import item.ITEM_Helmet;
+import item.ITEM_Helmet_Gold;
+import item.ITEM_Pants;
+import item.ITEM_Pants_Gold;
 import item.ITEM_Sword;
-import item.ITEM_Sword_Green;
 import main.GamePanel;
 
 public class AssetHandler {
@@ -50,9 +55,29 @@ public class AssetHandler {
         gamePanel.items[1].worldX = gamePanel.getTileSize() * 7;
         gamePanel.items[1].worldY = gamePanel.getTileSize() * 7;
 
-        gamePanel.items[2] = new ITEM_Sword_Green(gamePanel);
+        gamePanel.items[2] = new ITEM_Helmet(gamePanel);
         gamePanel.items[2].worldX = gamePanel.getTileSize() * 8;
         gamePanel.items[2].worldY = gamePanel.getTileSize() * 7;
+
+        gamePanel.items[3] = new ITEM_Chestplate(gamePanel);
+        gamePanel.items[3].worldX = gamePanel.getTileSize() * 9;
+        gamePanel.items[3].worldY = gamePanel.getTileSize() * 7;
+
+        gamePanel.items[4] = new ITEM_Pants(gamePanel);
+        gamePanel.items[4].worldX = gamePanel.getTileSize() * 10;
+        gamePanel.items[4].worldY = gamePanel.getTileSize() * 7;
+
+        gamePanel.items[5] = new ITEM_Helmet_Gold(gamePanel);
+        gamePanel.items[5].worldX = gamePanel.getTileSize() * 8;
+        gamePanel.items[5].worldY = gamePanel.getTileSize() * 8;
+
+        gamePanel.items[6] = new ITEM_Chestplate_Gold(gamePanel);
+        gamePanel.items[6].worldX = gamePanel.getTileSize() * 9;
+        gamePanel.items[6].worldY = gamePanel.getTileSize() * 8;
+
+        gamePanel.items[7] = new ITEM_Pants_Gold(gamePanel);
+        gamePanel.items[7].worldX = gamePanel.getTileSize() * 10;
+        gamePanel.items[7].worldY = gamePanel.getTileSize() * 8;
     }
 
 }

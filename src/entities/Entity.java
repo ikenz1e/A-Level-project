@@ -29,6 +29,7 @@ public class Entity {
 	public boolean attacking;
 	public int range = 0;
 	public int viewDistance = 0;
+	public float aggressiveness;
 
 	public int attackDamage;
 	

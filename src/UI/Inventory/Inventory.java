@@ -7,6 +7,7 @@ import utils.ItemType;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
+import java.util.Hashtable;
 
 import entities.Entity;
 
@@ -20,15 +21,17 @@ public class Inventory {
         * slot4: pants slot
     */
     // creating constants for the utility slots
-    private final int WEAPON_SLOT = 0;
-    private final int SHIELD_SLOT = 1;
-    private final int HELMET_SLOT = 2;
-    private final int CHESTPLATE_SLOT = 3;
-    private final int PANTS_SLOT = 4;
+    public final int WEAPON_SLOT = 0;
+    public final int SHIELD_SLOT = 1;
+    public final int HELMET_SLOT = 2;
+    public final int CHESTPLATE_SLOT = 3;
+    public final int PANTS_SLOT = 4;
+
+    Hashtable<ItemType, Integer> utilSlots = new Hashtable<ItemType, Integer>();
 
     // main array for storing all items in the inventory 2D array[column][row]
     private InventorySlot[][] invArray;
-    private InventorySlot[] utilArray;
+    public InventorySlot[] utilArray;
     // the size of the grid will be 5x5
     private int size = 5;
     private int utilSize = 5;
@@ -70,6 +73,13 @@ public class Inventory {
         currentSelectedSlotRow = 0;
         currentSelectedSlotCol = 0;
         selectedSlot = invArray[currentSelectedSlotCol][currentSelectedSlotRow];
+        
+        // assign all keys and values in the utilSlots hash table
+        utilSlots.put(ItemType.WEAPON, WEAPON_SLOT);
+        utilSlots.put(ItemType.SHIELD, SHIELD_SLOT);
+        utilSlots.put(ItemType.HELMET, HELMET_SLOT);
+        utilSlots.put(ItemType.CHESTPLATE, CHESTPLATE_SLOT);
+        utilSlots.put(ItemType.PANTS, PANTS_SLOT);
     }
 
     // method to add an item to the inventory
@@ -80,7 +90,47 @@ public class Inventory {
         InventorySlot emptySlot = null;
         InventorySlot itemSlot = null;
         // if the item is not a weapon or it is a weapon and there is an item in the weapon slot
-        if(item.itemType != ItemType.WEAPON || (item.itemType == ItemType.WEAPON && utilArray[WEAPON_SLOT].hasItem())){
+        
+         /*
+            *  -- how inventory slots work -- (repeat)
+            * slot0: weapon slot
+            * slot1: shield slot
+            * slot2: helmet slot
+            * slot3: chestplate slot
+            * slot4: pants slot
+        */
+        int slotTracker = 0;
+        boolean added = false;
+        for(InventorySlot slot : utilArray){
+            if(slotTracker == WEAPON_SLOT && item.itemType == ItemType.WEAPON && !slot.hasItem()){
+                slot.addNewItem(item, 1);
+                gamePanel.player.currentWeapon = item;
+                added = true;
+                break;
+            }else if (slotTracker == SHIELD_SLOT && item.itemType == ItemType.SHIELD && !slot.hasItem()){
+                slot.addNewItem(item, 1);
+                gamePanel.player.updateEquipment();
+                added = true;
+                break;
+            }else if (slotTracker == HELMET_SLOT && item.itemType == ItemType.HELMET && !slot.hasItem()){
+                slot.addNewItem(item, 1);
+                gamePanel.player.updateEquipment();
+                added = true;
+                break;
+            }else if (slotTracker == CHESTPLATE_SLOT && item.itemType == ItemType.CHESTPLATE && !slot.hasItem()){
+                slot.addNewItem(item, 1);
+                gamePanel.player.updateEquipment();
+                added = true;
+                break;
+            }else if (slotTracker == PANTS_SLOT && item.itemType == ItemType.PANTS && !slot.hasItem()){
+                slot.addNewItem(item, 1);
+                gamePanel.player.updateEquipment();
+                added = true;
+                break;
+            }
+            slotTracker++;
+        }
+        if(!added){
             // loop through all the slots in the inventory
             for(int i = 0; i < size; i++){
                 for(InventorySlot slot : invArray[i]){
@@ -98,30 +148,13 @@ public class Inventory {
             // if a slot with an item in it has been found, add this item to the slot
             if(itemSlot != null){
                 leftOver = itemSlot.addItem(amount);
-            // if a slot with the item was not found, add the item to the empty slot
+                // if a slot with the item was not found, add the item to the empty slot
             }else if(emptySlot != null){
                 emptySlot.addNewItem(item, amount);
             }
-        }else{
-             /*
-            *  -- how inventory slots work -- (repeat)
-            * slot0: weapon slot
-            * slot1: shield slot
-            * slot2: helmet slot
-            * slot3: chestplate slot
-            * slot4: pants slot
-            */
-            int slotTracker = 0;
-            for(InventorySlot slot : utilArray){
-                if(slotTracker == WEAPON_SLOT && item.itemType == ItemType.WEAPON){
-                    slot.addNewItem(item, 1);
-                    gamePanel.player.currentWeapon = item;
-                    break;
-                }
-                slotTracker++;
-            }
-        }       
+        }
 
+        
         // return the number of leftover items for use elsewhere 
         return leftOver;
     }
@@ -202,6 +235,13 @@ public class Inventory {
             useSelectedItem();
             gamePanel.inputHandler.keyPressed = true;
         }
+    }
+
+    // will be called in the use() method of item class for armour items
+    public void useArmour(Item armourPiece){
+        ItemType type = armourPiece.itemType;
+        utilArray[utilSlots.get(type)].addNewItem(armourPiece, 1);
+        addInvItem(armourPiece, 1);
     }
 
     public void draw(Graphics2D g2){

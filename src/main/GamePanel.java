@@ -63,7 +63,7 @@ public class GamePanel extends JPanel implements Runnable {
 	}
 
 	public void setupGame() {
-		assetHandler.setNPC();
+		// assetHandler.setNPC();
 		assetHandler.setItem();
 		assetHandler.setEnemy();
 	}
@@ -92,7 +92,6 @@ public class GamePanel extends JPanel implements Runnable {
 			delta += (currentTime - lastTime) / drawInterval;
 			// set the last time to the current time
 			lastTime = currentTime;
-			
 			// if delta >= 1, at least 1 draw interval has passed so continue with the game loop
 			if(delta >= 1) {
 				// update 

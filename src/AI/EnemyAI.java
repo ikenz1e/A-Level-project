@@ -12,8 +12,8 @@ public class EnemyAI {
 
     Random random = new Random();
 
-    public EnemyAI(GamePanel gp, Entity enemy){
-        
+    // constructor, takes gamepanel and the enemy
+    public EnemyAI(GamePanel gp, Entity enemy){ 
         this.gamePanel = gp;
         this.enemy = enemy;
     }
@@ -26,28 +26,38 @@ public class EnemyAI {
         }
         // if the player is in range, calculate a state
 
-        // calculate the enemies health as a percentage
-        int healthPercentage = (int) (((float) enemy.health / (float) enemy.maxHealth) * 100);
+        // the score is the likeliness of the enemy attacking the player or not in a given situation
+        float score;
+        // calulate the health as a percentage
+        float healthPercentage = ((float) enemy.health / (float) enemy.maxHealth);
+        score = healthPercentage * enemy.aggressiveness;
         // if the enemy is within attack range of the enemy
         if (distToPlayer < enemy.range){
-            // if the health is above 25%, continue attacking
-            if(healthPercentage >= 25){
-                return EnemyState.ATTACKING;
-            // if the health is below 25%, retreat
-            }else{
-                return EnemyState.RETREATING;
-            }
+            score += score/4;
         // if the player is out of range of the enemy's attacks
         }else{
-            // if the health is above 50%, continue attacking
-            if(healthPercentage >= 50){
-                return EnemyState.ATTACKING;
-            // if the health is below 50%, retreat
-            }else{
-                return EnemyState.RETREATING;
-            }
+            score -= score/4;
+        }
+        // if the enemy deals more damage than the player
+        if(gamePanel.player.currentWeapon == null || enemy.attackDamage + enemy.aggressiveness * 10 > gamePanel.player.currentWeapon.damage){
+            score += score*2;
+        // if the player deals more or the same damage
+        }else{
+            score -= score/2;
         }
         
+        // set the score to be between 0 and 1
+        if(score > 1){
+            score = 1f;
+        }else if(score < 0){
+            score = 0f;
+        }
+        // set the state depending on the score calculated
+        if(score > 0.4){
+            return EnemyState.ATTACKING;
+        }else{
+            return EnemyState.RETREATING;
+        }
     }
 
     public int getTargetCol(){

@@ -17,4 +17,10 @@ public class ITEM_Sword extends Item {
         damage = 5;
     }
 
+    public void use(){
+        Item item = gamePanel.player.inventory.utilArray[gamePanel.player.inventory.WEAPON_SLOT].getItem();
+        gamePanel.player.inventory.addInvItem(item, 1);
+        gamePanel.player.inventory.utilArray[gamePanel.player.inventory.WEAPON_SLOT].addNewItem(this, 1);
+    }
+
 }

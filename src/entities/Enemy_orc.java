@@ -29,6 +29,7 @@ public class Enemy_orc extends Entity{
         direction = "down";
         viewDistance = 4;
         range = 2;
+        aggressiveness = 0.8f;
         getImages();
     }
 

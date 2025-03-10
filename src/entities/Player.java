@@ -148,6 +148,10 @@ public class Player extends Entity{
 		}
 	}
 
+	public void updateEquipment(){
+		System.out.println("update equipment");
+	}
+
 	// update function to be run in the game loop
 	public void update() {
 		if(damageCooldown > 0){
