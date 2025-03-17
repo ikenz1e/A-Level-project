@@ -8,10 +8,12 @@ import java.awt.Rectangle;
 import javax.swing.JPanel;
 
 import AI.Pathfinder;
+import enemySpawning.EnemySpawner;
 import entities.Entity;
 import entities.Player;
 import handlers.AssetHandler;
 import handlers.CollisionHandler;
+import handlers.EnemyHandler;
 import handlers.InputHandler;
 import handlers.StateHandler;
 import item.Item;
@@ -42,6 +44,7 @@ public class GamePanel extends JPanel implements Runnable {
 	public AssetHandler assetHandler = new AssetHandler(this);
 	public Pathfinder pathFinder = new Pathfinder(this);
 	public StateHandler stateHandler = new StateHandler();
+	public EnemyHandler enemyHandler = new EnemyHandler(this);
 
 	Thread gameThread;
 
@@ -49,8 +52,8 @@ public class GamePanel extends JPanel implements Runnable {
 	public Player player = new Player(this);
 	// objects and NPCs
 	public Entity[] npcs = new Entity[10];
-	public Entity[] enemies = new Entity[10];
 	public Item[] items = new Item[15];
+	public EnemySpawner[] spawners = new EnemySpawner[5];
 
 
 	// constructor
@@ -65,7 +68,7 @@ public class GamePanel extends JPanel implements Runnable {
 	public void setupGame() {
 		// assetHandler.setNPC();
 		assetHandler.setItem();
-		assetHandler.setEnemy();
+		assetHandler.setSpawner();
 	}
 
 	
@@ -121,7 +124,7 @@ public class GamePanel extends JPanel implements Runnable {
 				}
 
 				// update enemies
-				for(Entity enemy : enemies){
+				for(Entity enemy : enemyHandler.spawnedEnemies){
 					if(enemy != null){
 						enemy.update();
 					}
@@ -165,7 +168,7 @@ public class GamePanel extends JPanel implements Runnable {
 					}
 				}
 
-				for(Entity enemy : enemies){
+				for(Entity enemy : enemyHandler.spawnedEnemies){
 					if(enemy != null){
 						enemy.draw(g2);
 					}
@@ -193,7 +196,7 @@ public class GamePanel extends JPanel implements Runnable {
 				}
 
 				// draw enemies
-				for(Entity enemy : enemies){
+				for(Entity enemy : enemyHandler.spawnedEnemies){
 					if(enemy != null){
 						enemy.draw(g2);
 					}
@@ -216,15 +219,6 @@ public class GamePanel extends JPanel implements Runnable {
 		
 		// disposes the graphics content and release system resources, preventing issues such as memory leaks
 		g2.dispose();
-	}
-	
-	// method to defeat an enemy, takes the index of the enemy in the enemies array
-	public void defeatEnemy(int index){
-		// make sure the enemy exists
-		if(enemies[index] != null){
-			// remove the enemy 
-			enemies[index] = null;
-		}
 	}
 
 	// method for getting the tile size in another class

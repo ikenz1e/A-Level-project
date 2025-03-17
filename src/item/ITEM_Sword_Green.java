@@ -13,7 +13,7 @@ public class ITEM_Sword_Green extends Item{
         // assigning the image attribute for drawing
         image = gamePanel.utils.getImage("items", "sword_green.png");
         itemType = ItemType.WEAPON;
-        damage = 10;
+        damage = 15;
     }
 
     public void use(){

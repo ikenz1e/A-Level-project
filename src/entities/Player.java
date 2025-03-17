@@ -143,10 +143,10 @@ public class Player extends Entity{
 			// get the index of the enemy that was attacked
 			int enemyIndex = gamePanel.collisionHandler.checkAttackCollision(attackHitbox);
 			// validate that the index returned is less than the length of the enemies array
-			if(enemyIndex < gamePanel.enemies.length){
+			if(enemyIndex < gamePanel.enemyHandler.spawnedEnemies.length){
 				// run the takeDamage method and check if it returns true, the enemy dies
-				if(gamePanel.enemies[enemyIndex].takeDamage(currentWeapon.damage)){
-					gamePanel.defeatEnemy(enemyIndex);
+				if(gamePanel.enemyHandler.spawnedEnemies[enemyIndex].takeDamage(currentWeapon.damage)){
+					gamePanel.enemyHandler.defeatEnemy(enemyIndex);
 				}
 			}
 			attackCooldown = 30;

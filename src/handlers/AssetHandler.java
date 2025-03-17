@@ -1,7 +1,6 @@
 package handlers;
 
-import entities.Enemy_orc;
-import entities.Enemy_slime;
+import enemySpawning.EnemySpawner;
 import entities.NPC_Wizard;
 import item.ITEM_Apple;
 import item.ITEM_Apple_Green;
@@ -35,17 +34,10 @@ public class AssetHandler {
         gamePanel.npcs[0].worldY = gamePanel.getTileSize() * 5;
     }
 
-    // setting the enemies on the map
-    public void setEnemy() {
-        // slime enemy
-        gamePanel.enemies[0] = new Enemy_slime(gamePanel);
-        gamePanel.enemies[0].worldX = gamePanel.getTileSize() * 5;
-        gamePanel.enemies[0].worldY = gamePanel.getTileSize() * 5;
-
-        // orc enemy
-        gamePanel.enemies[1] = new Enemy_orc(gamePanel);
-        gamePanel.enemies[1].worldX = gamePanel.getTileSize() * 10;
-        gamePanel.enemies[1].worldY = gamePanel.getTileSize() * 7;
+    public void setSpawner() {
+        gamePanel.spawners[0] = new EnemySpawner(gamePanel, 2);
+        gamePanel.spawners[0].col = 4;
+        gamePanel.spawners[0].row = 4;
     }
 
     // setting the items on the map
@@ -96,7 +88,7 @@ public class AssetHandler {
         gamePanel.items[10].worldY = gamePanel.getTileSize() * 4;
 
         gamePanel.items[11] = new ITEM_Shield_Blue(gamePanel);
-        gamePanel.items[11].worldX = gamePanel.getTileSize() * 14;
+        gamePanel.items[11].worldX = gamePanel.getTileSize() * 13;
         gamePanel.items[11].worldY = gamePanel.getTileSize() * 4;
 
     }

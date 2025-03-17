@@ -152,15 +152,15 @@ public class CollisionHandler {
 	public int checkAttackCollision(Rectangle attackHitbox){
 		int index = 999;
 
-		for (int i = 0; i < gamePanel.enemies.length; i++){
-			if(gamePanel.enemies[i] != null){
-				gamePanel.enemies[i].hitbox.x += gamePanel.enemies[i].worldX;
-				gamePanel.enemies[i].hitbox.y += gamePanel.enemies[i].worldY;
-				if(gamePanel.enemies[i].hitbox.intersects(attackHitbox)){
+		for (int i = 0; i < gamePanel.enemyHandler.spawnedEnemies.length; i++){
+			if(gamePanel.enemyHandler.spawnedEnemies[i] != null){
+				gamePanel.enemyHandler.spawnedEnemies[i].hitbox.x += gamePanel.enemyHandler.spawnedEnemies[i].worldX;
+				gamePanel.enemyHandler.spawnedEnemies[i].hitbox.y += gamePanel.enemyHandler.spawnedEnemies[i].worldY;
+				if(gamePanel.enemyHandler.spawnedEnemies[i].hitbox.intersects(attackHitbox)){
 					index = i;
 				}
-				gamePanel.enemies[i].hitbox.x = gamePanel.enemies[i].hitboxDefaultX;
-				gamePanel.enemies[i].hitbox.y = gamePanel.enemies[i].hitboxDefaultY;
+				gamePanel.enemyHandler.spawnedEnemies[i].hitbox.x = gamePanel.enemyHandler.spawnedEnemies[i].hitboxDefaultX;
+				gamePanel.enemyHandler.spawnedEnemies[i].hitbox.y = gamePanel.enemyHandler.spawnedEnemies[i].hitboxDefaultY;
 			}
 		}
 
