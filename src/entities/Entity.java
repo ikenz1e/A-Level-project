@@ -3,14 +3,21 @@ package entities;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
+import java.util.Random;
 
 import AI.EnemyState;
+import item.ITEM_Apple;
+import item.ITEM_Apple_Green;
+import item.ITEM_Potion_Speed;
+import item.ITEM_Potion_Strength;
+import item.Item;
 import main.GamePanel;
 
 // parent class for all entities, including items, the player and NPCs
 public class Entity {
 
 	GamePanel gamePanel;
+	Random random = new Random();
 
 	// current entity state
 	public int worldX, worldY;
@@ -21,6 +28,7 @@ public class Entity {
 	public int maxHealth;
 	public boolean onPath = false;
 	public EnemyState currentState = EnemyState.IDLE;
+	private Item[] drops = new Item[4];
 
 	public Rectangle hitbox;
 	public int hitboxDefaultX;
@@ -43,6 +51,10 @@ public class Entity {
 	
 	public Entity(GamePanel gp){
 		this.gamePanel = gp;
+		drops[0] = new ITEM_Apple(gp);
+		drops[1] = new ITEM_Apple_Green(gp);
+		drops[2] = new ITEM_Potion_Speed(gp);
+		drops[3] = new ITEM_Potion_Strength(gp);
 		setDefaultValues();
 	}
 	
@@ -277,6 +289,16 @@ public class Entity {
 
 	public void setAction(){
 
+	}
+
+	// used for enemies for any logic required when an enemy is defeated
+	public void defeat(){
+		int num = random.nextInt(drops.length);
+		int maxRange = 2;
+		int minRange = -2;
+		int col = getCol() + random.nextInt(maxRange-minRange) + minRange;
+		int row = getRow() + random.nextInt(maxRange-minRange) + minRange;
+		gamePanel.assetHandler.addItem(drops[num], col, row);
 	}
 
 	public void update(){

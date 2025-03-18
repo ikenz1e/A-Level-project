@@ -10,11 +10,11 @@ import item.ITEM_Helmet;
 import item.ITEM_Helmet_Gold;
 import item.ITEM_Pants;
 import item.ITEM_Pants_Gold;
-import item.ITEM_Potion_Strength;
 import item.ITEM_Shield;
 import item.ITEM_Shield_Blue;
 import item.ITEM_Sword;
 import item.ITEM_Sword_Green;
+import item.Item;
 import main.GamePanel;
 
 public class AssetHandler {
@@ -95,10 +95,19 @@ public class AssetHandler {
         gamePanel.items[11] = new ITEM_Shield_Blue(gamePanel);
         gamePanel.items[11].worldX = gamePanel.getTileSize() * 13;
         gamePanel.items[11].worldY = gamePanel.getTileSize() * 4;
-        
-        gamePanel.items[12] = new ITEM_Potion_Strength(gamePanel);
-        gamePanel.items[12].worldX = gamePanel.getTileSize() * 3;
-        gamePanel.items[12].worldY = gamePanel.getTileSize() * 3;
+    }
+
+
+    // used whenever adding an item to the map from another class
+    public void addItem(Item item, int col, int row){
+        for(int i = 0; i < gamePanel.items.length; i++){
+            if(gamePanel.items[i] == null){
+                gamePanel.items[i] = item;
+                gamePanel.items[i].worldX = col * gamePanel.getTileSize();
+                gamePanel.items[i].worldY = row * gamePanel.getTileSize();
+                return;
+            }
+        }
     }
 
 }

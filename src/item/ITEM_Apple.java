@@ -12,6 +12,7 @@ public class ITEM_Apple extends Item {
 
         image = gamePanel.utils.getImage("items", "apple.png");
         itemType = ItemType.CONSUMABLE;
+        maxStack = 10;
     }
     
     public void use(){

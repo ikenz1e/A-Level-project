@@ -9,17 +9,17 @@ import main.GamePanel;
 public class Enemy_bat extends Entity{
 
 
-  // cooldown for selecting a random direction
+    // cooldown for selecting a random direction
     private int moveCountdown = 60;
 
     // creating an instance of the EnemyAI class
     private EnemyAI brain = new EnemyAI(gamePanel, this); 
 
-  public Enemy_bat(GamePanel gp) {
-    super(gp);
-  }
+    public Enemy_bat(GamePanel gp) {
+        super(gp);
+    }
 
-  // set the defaults for all necessary attributes and get images
+    // set the defaults for all necessary attributes and get images
     public void setDefaultValues(){
         this.hitbox = new Rectangle(8, 16, 32, 32);
         this.onPath = true;

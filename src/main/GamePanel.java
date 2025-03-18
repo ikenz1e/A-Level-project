@@ -109,8 +109,7 @@ public class GamePanel extends JPanel implements Runnable {
 		
 	}
 	
-	public void update() {
-		
+	public void update() {		
 		switch(stateHandler.getCurrentState()){
 			case GAME:
 				// update the player

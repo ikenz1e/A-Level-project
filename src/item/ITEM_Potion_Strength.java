@@ -11,8 +11,9 @@ public class ITEM_Potion_Strength extends Item{
 
     name = "strength potion";
 
-    image = gamePanel.utils.getImage("items", "potion_strenght.png");
+    image = gamePanel.utils.getImage("items", "potion_strength.png");
     itemType = ItemType.CONSUMABLE;
+    maxStack = 2;
   }
 
   public void use(){

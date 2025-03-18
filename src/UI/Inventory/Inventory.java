@@ -139,7 +139,7 @@ public class Inventory {
                         emptySlot = slot;
                     }
                     // if the item of this slot is the item being searched for, set the itemSlot variable to this slot
-                    if(slot.getItem() == item){
+                    if(slot.hasItem() && slot.getItem().name == item.name){
                         itemSlot = slot;
                     }
                 }

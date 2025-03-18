@@ -13,6 +13,7 @@ public ITEM_Potion_Speed(GamePanel gp) {
 
     image = gamePanel.utils.getImage("items", "potion_speed.png");
     itemType = ItemType.CONSUMABLE;
+    maxStack = 2;
   }
 
   public void use(){

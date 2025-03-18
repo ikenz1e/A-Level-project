@@ -53,7 +53,7 @@ public class EnemyHandler {
     // method used to handle defeating an enemy
     public void defeatEnemy(int index){
         if(spawnedEnemies[index] != null){
-            // spawnedEnemies[index].defeat(); TODO: add
+            spawnedEnemies[index].defeat(); 
             spawnedEnemies[index] = null;
         }
     }
