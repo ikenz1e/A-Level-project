@@ -10,6 +10,7 @@ import item.ITEM_Helmet;
 import item.ITEM_Helmet_Gold;
 import item.ITEM_Pants;
 import item.ITEM_Pants_Gold;
+import item.ITEM_Potion_Strength;
 import item.ITEM_Shield;
 import item.ITEM_Shield_Blue;
 import item.ITEM_Sword;
@@ -38,6 +39,10 @@ public class AssetHandler {
         gamePanel.spawners[0] = new EnemySpawner(gamePanel, 2);
         gamePanel.spawners[0].col = 4;
         gamePanel.spawners[0].row = 4;
+
+        gamePanel.spawners[1] = new EnemySpawner(gamePanel, 3);
+        gamePanel.spawners[1].col = 9;
+        gamePanel.spawners[1].row = 7;
     }
 
     // setting the items on the map
@@ -90,7 +95,10 @@ public class AssetHandler {
         gamePanel.items[11] = new ITEM_Shield_Blue(gamePanel);
         gamePanel.items[11].worldX = gamePanel.getTileSize() * 13;
         gamePanel.items[11].worldY = gamePanel.getTileSize() * 4;
-
+        
+        gamePanel.items[12] = new ITEM_Potion_Strength(gamePanel);
+        gamePanel.items[12].worldX = gamePanel.getTileSize() * 3;
+        gamePanel.items[12].worldY = gamePanel.getTileSize() * 3;
     }
 
 }

@@ -11,7 +11,7 @@ public class ITEM_Apple_Green extends Item{
       name = "green apple";
 
       image = gamePanel.utils.getImage("items", "apple_green.png");
-      itemType = ItemType.FOOD;
+      itemType = ItemType.CONSUMABLE;
   }
 
   public void use(){

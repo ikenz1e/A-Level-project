@@ -123,7 +123,14 @@ public class GamePanel extends JPanel implements Runnable {
 					}
 				}
 
-				// update enemies
+				// attempt to spawn from spawners
+				for(EnemySpawner spawner: spawners){
+					if(spawner != null){
+						spawner.attemptSpawn();
+					}
+				}
+
+				// update enemyHandler.spawnedEnemies
 				for(Entity enemy : enemyHandler.spawnedEnemies){
 					if(enemy != null){
 						enemy.update();
@@ -195,7 +202,7 @@ public class GamePanel extends JPanel implements Runnable {
 					}
 				}
 
-				// draw enemies
+				// draw enemyHandler.spawnedEnemies
 				for(Entity enemy : enemyHandler.spawnedEnemies){
 					if(enemy != null){
 						enemy.draw(g2);

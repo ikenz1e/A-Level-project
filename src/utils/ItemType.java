@@ -2,7 +2,7 @@ package utils;
 
 public enum ItemType {
     WEAPON,
-    FOOD,
+    CONSUMABLE,
     SHIELD,
     HELMET,
     CHESTPLATE,

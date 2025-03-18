@@ -4,6 +4,7 @@ import java.awt.Rectangle;
 
 import UI.Inventory.Inventory;
 import UI.Inventory.InventorySlot;
+import effects.Effect;
 import handlers.InputHandler;
 import item.Item;
 import main.GamePanel;
@@ -23,6 +24,7 @@ public class Player extends Entity{
 	public float defence;
 
 	public Inventory inventory;
+	public Effect[] effects = new Effect[5];
 
 	// constructor, passing in gamePanel and inputHandler
 	public Player(GamePanel gp) {
@@ -86,11 +88,9 @@ public class Player extends Entity{
 			amount *= 1 - defence;
 			// calculate if the player has died or not, returning true/false depending on this
 			if((health-amount) <= 0){
-				System.out.println(health);
 				health = 0;
 				return true;
 			}else{
-				System.out.println(health);
 				health -= amount;
 				return false;
 			}
@@ -166,13 +166,18 @@ public class Player extends Entity{
 
 		// divide the defence by 100 to create a percentage
 		defence /= 100;
-		System.out.println(defence);
 	}
 
 	// update function to be run in the game loop
 	public void update() {
 		if(damageCooldown > 0){
 			damageCooldown--;
+		}
+
+		for(Effect effect : effects){
+			if(effect != null){
+				effect.useEffect();
+			}
 		}
 
 		if(attacking){
@@ -261,7 +266,23 @@ public class Player extends Entity{
 	public void addHealth(int amount){
 		// set the health to either the health + amount of the maximum health if health + amount > maxHealth
 		health = Math.min(health + amount, maxHealth);
-		System.out.println(health);
+	}
+
+	public void addEffect(Effect effect){
+		for(int i = 0; i < effects.length; i++){
+			if(effects[i] == null){
+				effects[i] = effect;
+				break;
+			}
+		}
+	}
+
+	public void removeEffect(Effect removedEffect){
+		for(int i = 0; i < effects.length; i++){
+			if(effects[i] == removedEffect){
+				effects[i] = null;
+			}
+		}
 	}
 	
 }
