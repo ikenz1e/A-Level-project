@@ -26,7 +26,7 @@ public class Enemy_slime extends Entity {
         speed = 1;
         health = 20;
         maxHealth = 20;
-        attackDamage = 5;
+        attackDamage = 3;
         screenX = worldX;
         screenY = worldY;
         direction = "down";

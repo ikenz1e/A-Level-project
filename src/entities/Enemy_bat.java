@@ -26,7 +26,7 @@ public class Enemy_bat extends Entity{
         speed = 4;
         health = 5;
         maxHealth = 5;
-        attackDamage = 5;
+        attackDamage = 2;
         screenX = worldX;
         screenY = worldY;
         direction = "down";

@@ -9,6 +9,7 @@ import handlers.InputHandler;
 import item.Item;
 import main.GamePanel;
 import utils.ItemType;
+import utils.State;
 
 public class Player extends Entity{
 
@@ -89,6 +90,7 @@ public class Player extends Entity{
 			// calculate if the player has died or not, returning true/false depending on this
 			if((health-amount) <= 0){
 				health = 0;
+				defeat();
 				return true;
 			}else{
 				health -= amount;
@@ -99,6 +101,10 @@ public class Player extends Entity{
 			return false;
 		}
 		
+	}
+
+	public void defeat(){
+		gamePanel.stateHandler.changeState(State.DEATH);
 	}
 	
 	// method to handle picking up items, passing in the index in the gamePanel.items array

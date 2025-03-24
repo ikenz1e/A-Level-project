@@ -285,7 +285,7 @@ public class Inventory {
         Rectangle invBackground = new Rectangle(xCoord, yCoord, width, height);
         g2.setColor(backgroudColour);
         g2.fill(invBackground);
-        // initialise the firsst x and y coordinates of slots to be the x and y coordinates of the background
+        // initialise the first x and y coordinates of slots to be the x and y coordinates of the background
         int slotX = xCoord;
         int slotY = yCoord;
         // draw the slots - 48x48 squares with white border

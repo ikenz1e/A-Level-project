@@ -23,7 +23,7 @@ public class Enemy_orc extends Entity{
         speed = 2;
         health = 150;
         maxHealth = 150;
-        attackDamage = 10;
+        attackDamage = 7;
         screenX = worldX;
         screenY = worldY;
         direction = "down";

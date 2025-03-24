@@ -7,9 +7,12 @@ import java.awt.event.MouseListener;
 
 public class InputHandler implements KeyListener, MouseListener{
 
-	public boolean wPressed, sPressed, dPressed, aPressed, qPressed, ePressed, escPressed,  upPressed, downPressed, leftPressed, rightPressed;
-	
+	public boolean wPressed, sPressed, dPressed, aPressed, qPressed, ePressed, escPressed,  upPressed, downPressed, leftPressed, rightPressed, enterPressed;
+	public boolean mouseDown;
+	public boolean mouseClick;
 	public boolean keyPressed;
+
+	public boolean lPressed;
 
 	@Override
 	public void keyTyped(KeyEvent e) {
@@ -58,6 +61,12 @@ public class InputHandler implements KeyListener, MouseListener{
 		case KeyEvent.VK_RIGHT:
 			rightPressed = true;
 			break;
+		case KeyEvent.VK_ENTER:
+			enterPressed = true;
+			break;
+		case KeyEvent.VK_L:
+			lPressed = true;
+			break;
 		default:
 			break;
 		}
@@ -105,6 +114,12 @@ public class InputHandler implements KeyListener, MouseListener{
 		case KeyEvent.VK_RIGHT:
 			rightPressed = false;
 			break;
+		case KeyEvent.VK_ENTER:
+			enterPressed = false;
+			break;
+		case KeyEvent.VK_L:
+			lPressed = false;
+			break;
 		default:
 			break;
 		}
@@ -113,17 +128,17 @@ public class InputHandler implements KeyListener, MouseListener{
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		
+		mouseClick = true;
 	}
 
 	@Override
 	public void mousePressed(MouseEvent e) {
-		
+		mouseDown = true;
 	}
 
 	@Override
 	public void mouseReleased(MouseEvent e) {
-		
+		mouseDown = false;
 	}
 
 	@Override

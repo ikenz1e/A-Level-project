@@ -8,6 +8,7 @@ import java.awt.Rectangle;
 import javax.swing.JPanel;
 
 import AI.Pathfinder;
+import UI.Game.GameUI;
 import enemySpawning.EnemySpawner;
 import entities.Entity;
 import entities.Player;
@@ -46,6 +47,8 @@ public class GamePanel extends JPanel implements Runnable {
 	public StateHandler stateHandler = new StateHandler();
 	public EnemyHandler enemyHandler = new EnemyHandler(this);
 
+	public GameUI gameUI = new GameUI(this);
+
 	Thread gameThread;
 
 	// instantiate the player class
@@ -62,6 +65,7 @@ public class GamePanel extends JPanel implements Runnable {
 		this.setBackground(Color.black);
 		this.setDoubleBuffered(true); // all drawing will be done in an off screen buffer to avoid any visual bugs and improving performance
 		this.addKeyListener(inputHandler);
+		this.addMouseListener(inputHandler);
 		this.setFocusable(true); // the game panel can be "focused" to receive all key inputs
 	}
 
@@ -77,6 +81,17 @@ public class GamePanel extends JPanel implements Runnable {
 		gameThread.start(); // start the thread, automatically calls the run method
 	}
 	
+	// used to restart the game, resets all the required attributes back to their original
+	public void restart(){
+		player = new Player(this);
+		npcs = new Entity[10];
+		enemyHandler.spawnedEnemies = new Entity[10];
+		items = new Item[15];
+		spawners = new EnemySpawner[5];
+
+		setupGame();
+	}
+
 	// automatically implemented when using the Runnable interface, used for Threads
 	@Override
 	public void run() {
@@ -140,14 +155,43 @@ public class GamePanel extends JPanel implements Runnable {
 					inputHandler.ePressed = false;
 					stateHandler.changeState(State.INVENTORY);
 				}
+
+				if(inputHandler.escPressed){
+					inputHandler.escPressed = false;
+					stateHandler.changeState(State.PAUSE);
+				}
+
+				if(inputHandler.lPressed){
+					player.takeDamage(100);
+				}
+
 				break;
 			case INVENTORY:
 				if(inputHandler.escPressed){
+					inputHandler.escPressed = false;
 					stateHandler.changeState(State.GAME);
 				}
 
 				player.inventory.update();
+				break;
+			case MAIN_MENU:
+				gameUI.updateButtons();
 
+				if(inputHandler.enterPressed){
+					stateHandler.changeState(State.GAME);
+				}
+				break;
+			case PAUSE:
+				if(inputHandler.enterPressed || inputHandler.escPressed){
+					inputHandler.enterPressed = false;
+					inputHandler.escPressed = false;
+					stateHandler.changeState(State.GAME);
+				}
+
+				gameUI.updateButtons();
+				break;
+			case DEATH:
+				gameUI.updateButtons();
 				break;
 		}
 		
@@ -186,6 +230,9 @@ public class GamePanel extends JPanel implements Runnable {
 						item.draw(g2);
 					}
 				}
+
+				gameUI.drawHealthBar(g2);
+
 				break;
 			case INVENTORY:
 				//draw the map
@@ -219,7 +266,44 @@ public class GamePanel extends JPanel implements Runnable {
 				g2.fill(new Rectangle(0, 0, screenWidth, screenHeight));
 				player.inventory.draw(g2);
 				break;
-			default:
+			case MAIN_MENU:
+				gameUI.drawMainMenu(g2);
+				break;
+			case PAUSE:
+				//draw the map
+				tileManager.draw(g2);
+		
+				// draw the player
+				player.draw(g2);
+
+				// draw npcs
+				for(Entity entity : npcs) {
+					if(entity != null){
+						entity.draw(g2);
+					}
+				}
+
+				// draw enemyHandler.spawnedEnemies
+				for(Entity enemy : enemyHandler.spawnedEnemies){
+					if(enemy != null){
+						enemy.draw(g2);
+					}
+				}
+				// draw items
+				for(Item item: items){
+					if(item != null){
+						item.draw(g2);
+					}
+				}
+
+				gameUI.drawHealthBar(g2);
+
+				g2.setColor(new Color(53, 53, 53,100));
+				g2.fillRect(0, 0, screenWidth, screenHeight);
+				gameUI.drawPauseMenu(g2);
+				break;
+			case DEATH:
+				gameUI.drawDeathMenu(g2);
 				break;
 		}
 		
